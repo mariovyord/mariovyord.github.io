@@ -1,29 +1,29 @@
 ---
-import HeaderLink from './HeaderLink.astro';
+import HeaderLink from "./HeaderLink.astro";
 ---
 
 <header>
-	<nav>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-		</div>
-	</nav>
+  <nav>
+    <div class="internal-links">
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/blog">Blog</HeaderLink>
+    </div>
+  </nav>
 </header>
 <style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
+  header {
+    margin: 0;
+    padding: 0 1em;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  nav a {
+    padding: 1em 0.5em;
+    color: var(--black);
+    border-bottom: 4px solid transparent;
+    text-decoration: none;
+  }
 </style>
