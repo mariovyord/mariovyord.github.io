@@ -1,16 +1,151 @@
 ---
-title: 'First post'
-description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 08 2022'
-heroImage: '/blog-placeholder-3.jpg'
+title: "Five Easy Algorithms for Beginners"
+description: "Start simple with Bubble sort, Insertion sort, Linear search, Primality Test and Fibonacci numbers"
+pubDate: "Jul 08 2022"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+For most beginner developers, algorithms are a source of a lot of anxiety. But as with everything in this field, I have found that the best strategy is: _start simple._ So here is a list of five algorithms you can learn in an afternoon and impress your non-programmer friends.
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+## What is an algorithm?
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+An `algorithm` is a finite sequence of instructions, typically used to solve a class of specific problems or to perform a computation.
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+Learning resources [GeeksForGeeks](https://www.geeksforgeeks.org/fundamentals-of-algorithms/), [Programiz](https://www.programiz.com/dsa), [FreeCodeCamp](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/#basic-javascript)
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+## Bubble Sort
+
+Learning resources [GeeksForGeeks](https://www.geeksforgeeks.org/bubble-sort/), [StackOverflow](https://stackoverflow.com/questions/37817334/javascript-bubble-sort)
+
+Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements if they are in the wrong order.
+
+```js
+function bubbleSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}
+console.log(bubbleSort([2, 1, -1, 8, 3, 7, 3]));
+```
+
+## Insertion Sort
+
+Learning resources [Wikipedia](https://en.wikipedia.org/wiki/Insertion_sort), [StackOverflow](https://stackoverflow.com/questions/33530928/insertion-sort-algorithm-on-javascript)
+
+Simple sorting algorithm that builds the final sorted array (or list) one item at a time by comparisons.
+
+```js
+function insertionSort(nums) {
+  for (let i = 1; i < nums.length; i++) {
+    let previousIndex = i - 1;
+    let temporaryNumber = nums[i];
+
+    while (previousIndex >= 0 && nums[previousIndex] > temporaryNumber) {
+      nums[previousIndex + 1] = nums[previousIndex];
+      previousIndex--;
+    }
+
+    nums[previousIndex + 1] = temporaryNumber;
+  }
+
+  return nums;
+}
+console.log(insertionSort([2, -1, 2, 4, 1]));
+```
+
+### What is the Difference Between Bubble Sort and Insertion Sort?
+
+In insertion sort elements are bubbled into the sorted section, while in bubble sort the maximums are bubbled out of the unsorted section.[1](https://stackoverflow.com/questions/17270628/insertion-sort-vs-bubble-sort-algorithms)
+
+Learning resources [Bubble Sort vs Insertion Sort](https://realtoughcandy.com/bubble-sort-vs-insertion-sort-whats-the-difference/), [StackOverflow](https://stackoverflow.com/questions/17270628/insertion-sort-vs-bubble-sort-algorithms)
+
+## Linear Search Algorithm
+
+Learning resources [GeeksForGeeks](https://www.geeksforgeeks.org/linear-search/)
+
+Linear Search is defined as a sequential search algorithm that starts at one end and goes through each element of a list until the desired element is found, otherwise the search continues till the end of the data set.
+
+```js
+function linearSearch(arr, x) {
+  for (let i = 0; i < arr.length; i++)
+    if (arr[i] == x) {
+      return i;
+    }
+  return -1;
+}
+console.log(linearSearch([1, 2, 3, 4, 5], 4));
+```
+
+## Primality Test
+
+Learning resources [Wikipedia](https://en.wikipedia.org/wiki/Primality_test), [StackOverflow - algorithm](https://stackoverflow.com/questions/40200089/check-number-prime-in-javascript), [StackOverflow - Why square root?](https://stackoverflow.com/questions/5811151/why-do-we-check-up-to-the-square-root-of-a-number-to-determine-if-the-number-is)
+
+A prime number (or a prime) is a natural number greater than 1 that is not a product of two smaller natural numbers.
+
+```js
+function isPrime(num) {
+  if (num <= 1) {
+    return false;
+  }
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) {
+      return false;
+    }
+  }
+  return true;
+}
+console.log(isPrime(-1)); // false
+console.log(isPrime(6)); // false
+console.log(isPrime(11)); // true
+```
+
+## Fibonacci Number Program
+
+Learning resources [GeeksForGeeks](https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/)
+
+The Fibonacci numbers form a sequence such that each number is the sum of the two preceding ones, starting from 0 and 1.
+
+How to print the n-th Fibonacci Number:
+
+```js
+function fibonacci(n) {
+  if (n < 2) {
+    return n;
+  }
+
+  let firstNum = 0;
+  let secondNum = 1;
+
+  for (let i = 2; i <= n; i++) {
+    let sumOfTheTwo = firstNum + secondNum;
+    firstNum = secondNum;
+    secondNum = sumOfTheTwo;
+  }
+
+  return secondNum;
+}
+console.log(fibonacci(5)); // 8
+```
+
+## Further Reading: Recursion
+
+Learning resources [Wikipedia](<https://en.wikipedia.org/wiki/Recursion_(computer_science)>), [Programiz](https://www.programiz.com/javascript/recursion), [Web Dev Simplified](https://www.youtube.com/watch?v=6oDQaB2one8&t=30s&ab_channel=WebDevSimplified), [FreeCodeCamp Lecture](https://www.youtube.com/watch?v=IJDJ0kBx2LM&ab_channel=freeCodeCamp.org)
+
+In computer science, recursion is a method of solving a computational problem where the solution depends on solutions to smaller instances of the same problem. Recursion solves such recursive problems by using functions that call themselves from within their own code.
+
+So you can rewrite the above `fibonacci` function as:
+
+```js
+function fibonacci(n) {
+  if (n < 2) {
+    return n;
+  } else {
+    return fibonacci(n - 1) + fibonacci(n - 2);
+  }
+}
+console.log(fibonacci(5)); // 8
+```
