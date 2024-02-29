@@ -63,12 +63,12 @@ const posts = (await getCollection("blog")).sort(
       <hr />
       <section>
         <header>
-          <h3 class="title">Latest posts</h3>
+          <h3 class="title">Latest post</h3>
         </header>
         <section>
           <ul>
             {
-              posts.slice(0, 3).map((post) => (
+              posts.slice(0, 1).map((post) => (
                 <li>
                   <PostCard
                     pubDate={post.data.pubDate}
@@ -84,43 +84,37 @@ const posts = (await getCollection("blog")).sort(
       </section>
     </main>
     <Footer />
-  </body><style>
-    .title {
-      text-align: center;
-    }
-    h3.title {
-      margin: 2rem 0 0.5rem 0;
-    }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1em;
-      margin-top: 1em;
-    }
-    .social-links a {
-      text-decoration: none;
-      color: rgb(var(--gray));
-    }
-    .social-links a:hover {
-      color: rgb(var(--gray-dark), 50%);
-    }
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-    ul li {
-      width: 100%;
-      text-decoration: none;
-    }
-
-    @media (max-width: 720px) {
-      ul {
-        gap: 0.5em;
+    <style>
+      h3.title {
+        margin: 2rem 0 0.5rem 0;
       }
-    }
-  </style>
+      .social-links {
+        display: flex;
+        justify-content: start;
+        gap: 1em;
+        margin-top: 1em;
+      }
+      .social-links a {
+        text-decoration: none;
+        color: rgb(var(--gray));
+      }
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        width: 100%;
+        text-decoration: none;
+      }
+      @media (max-width: 720px) {
+        ul {
+          gap: 0.5em;
+        }
+      }
+    </style>
+  </body>
 </html>

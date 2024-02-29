@@ -28,7 +28,14 @@ const posts = (await getCollection("blog")).sort(
         width: 100%;
         text-decoration: none;
       }
-
+      .title {
+        margin-bottom: 1em;
+        padding: 1em 0;
+        line-height: 1;
+      }
+      .title h1 {
+        margin: 0 0 0.5em 0;
+      }
       @media (max-width: 720px) {
         ul {
           gap: 0.5em;
@@ -40,17 +47,23 @@ const posts = (await getCollection("blog")).sort(
     <Header />
     <main>
       <section>
+        <div class="title">
+          <h1>Blog</h1>
+          <hr />
+        </div>
         <ul>
           {
             posts.map((post) => (
-              <li>
-                <PostCard
-                  pubDate={post.data.pubDate}
-                  title={post.data.title}
-                  description={post.data.description}
-                  slug={post.slug}
-                />
-              </li>
+              <>
+                <li>
+                  <PostCard
+                    pubDate={post.data.pubDate}
+                    title={post.data.title}
+                    description={post.data.description}
+                    slug={post.slug}
+                  />
+                </li>
+              </>
             ))
           }
         </ul>
