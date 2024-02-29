@@ -90,7 +90,7 @@ p {
   margin-bottom: 1em;
 }
 .prose p {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 textarea {
   width: 100%;
@@ -109,7 +109,7 @@ img {
 }
 code {
   padding: 2px 5px;
-  background-color: var(--bg-color);
+  background-color: rgb(var(--gray-dark));
   border-radius: 2px;
 }
 pre {
@@ -123,7 +123,7 @@ blockquote {
   border-left: 4px solid var(--accent);
   padding: 0 0 0 20px;
   margin: 0px;
-  font-size: 1.333em;
+  font-size: 1.2em;
 }
 hr {
   border: none;
