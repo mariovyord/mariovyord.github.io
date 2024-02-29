@@ -26,4 +26,4 @@ If you have an [Astro](https://astro.build/) project and your Prettier extension
   }
 ```
 
-Voila! Go and try it out - `Prettier` should now format your `.astro` files on save.
+And that's it! Go and try it out - `Prettier` should now format your `.astro` files on save.
