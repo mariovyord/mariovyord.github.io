@@ -13,37 +13,51 @@
 }
 @font-face {
   font-family: "Roboto";
-  src: url("/fonts/Roboto-Regular.ttf") format("ttf");
+  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Roboto";
-  src: url("/fonts/Roboto-Bold.ttf") format("ttf");
+  src: url("/fonts/Roboto-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Libre Baskerville";
+  src: url("/fonts/LibreBaskerville-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Libre Baskerville";
+  src: url("/fonts/LibreBaskerville-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Libre Baskerville";
+  src: url("/fonts/LibreBaskerville-Italic.ttf") format("ttf");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Libre Baskerville", Georgia, serif;
   margin: 0;
   padding: 0;
   text-align: left;
-  background: var(--bg-color);
+  background: linear-gradient(var(--gray-gradient)) no-repeat;
   background-size: 100% 600px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  color: var(--text-color);
-  font-size: 17px;
+  color: rgb(var(--gray-dark));
+  font-size: 16px;
   line-height: 1.7;
-
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-footer {
-  margin-top: auto;
 }
 main {
   width: 720px;
@@ -57,8 +71,10 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: "Roboto";
+  font-weight: 700;
   margin: 0 0 0.5rem 0;
-  color: var(--text-color);
+  color: rgb(var(--black));
   line-height: 1.2;
 }
 h1 {
@@ -90,14 +106,14 @@ p {
   margin-bottom: 1em;
 }
 .prose p {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 }
 textarea {
   width: 100%;
-  font-size: 15px;
+  font-size: 16px;
 }
 input {
-  font-size: 15px;
+  font-size: 16px;
 }
 table {
   width: 100%;
@@ -109,7 +125,7 @@ img {
 }
 code {
   padding: 2px 5px;
-  background-color: rgb(var(--gray-dark));
+  background-color: rgb(var(--gray-light));
   border-radius: 2px;
 }
 pre {
@@ -123,7 +139,7 @@ blockquote {
   border-left: 4px solid var(--accent);
   padding: 0 0 0 20px;
   margin: 0px;
-  font-size: 1.2em;
+  font-size: 1.333em;
 }
 hr {
   border: none;
@@ -131,7 +147,7 @@ hr {
 }
 @media (max-width: 720px) {
   body {
-    font-size: 16px;
+    font-size: 18px;
   }
   main {
     padding: 1em;
