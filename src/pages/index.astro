@@ -7,7 +7,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog")).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
@@ -21,6 +21,12 @@ const posts = (await getCollection("blog")).sort(
     <main>
       <section>
         <h1 class="title">Hi, I'm Mario 👋</h1>
+        <p>
+          <i>Здравейте</i>, I'm a Bulgarian web developer into my second year of
+          professional experience. I'm currently building web applications with
+          Angular. Outside of work I enjoy smashing bosses in Dark Souls and
+          learning more about the inner workings of the Internet.
+        </p>
         <div class="social-links">
           <a href="https://www.linkedin.com/in/mariovyordanov/" target="_blank">
             <span class="sr-only">Follow Mario on Linkedin</span>
@@ -53,22 +59,16 @@ const posts = (await getCollection("blog")).sort(
             >
           </a>
         </div>
-        <p>
-          <i>Здравейте</i>, I'm a Bulgarian web developer into my second year of
-          professional experience. I'm currently building web applications with
-          Angular. Outside of work I enjoy smashing bosses in Dark Souls and
-          learning more about the inner workings of the Internet.
-        </p>
       </section>
       <hr />
       <section>
         <header>
-          <h3 class="title">Latest post</h3>
+          <h3 class="title">Latest posts</h3>
         </header>
-        <section>
+        <section class="blog-list">
           <ul>
             {
-              posts.slice(0, 1).map((post) => (
+              posts.slice(0, 3).map((post) => (
                 <li>
                   <PostCard
                     pubDate={post.data.pubDate}
@@ -82,39 +82,41 @@ const posts = (await getCollection("blog")).sort(
           </ul>
         </section>
       </section>
-    </main>
-    <Footer />
-    <style>
-      h3.title {
-        margin: 2rem 0 0.5rem 0;
-      }
-      .social-links {
-        display: flex;
-        justify-content: start;
-        gap: 1em;
-        margin-top: 1em;
-      }
-      .social-links a {
-        text-decoration: none;
-        color: rgb(var(--gray));
-      }
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      ul li {
-        width: 100%;
-        text-decoration: none;
-      }
-      @media (max-width: 720px) {
-        ul {
-          gap: 0.5em;
+      <Footer />
+      <style>
+        .social-links {
+          display: flex;
+          justify-content: start;
+          gap: 1em;
+          margin-top: 1em;
         }
-      }
-    </style>
+        .social-links a {
+          text-decoration: none;
+          color: rgb(var(--gray));
+        }
+        .blog-list {
+          padding: 20px;
+          border: 1px solid rgb(var(--gray-light));
+          border-radius: 5px;
+        }
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2rem;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+        ul li {
+          width: 100%;
+          text-decoration: none;
+        }
+        @media (max-width: 720px) {
+          ul {
+            gap: 0.5em;
+          }
+        }
+      </style>
+    </main>
   </body>
 </html>

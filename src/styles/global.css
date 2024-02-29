@@ -73,7 +73,6 @@ h5,
 h6 {
   font-family: "Roboto";
   font-weight: 700;
-  margin: 0 0 0.5rem 0;
   color: rgb(var(--black));
   line-height: 1.2;
 }
@@ -106,14 +105,14 @@ p {
   margin-bottom: 1em;
 }
 .prose p {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 textarea {
   width: 100%;
-  font-size: 16px;
+  font-size: 14px;
 }
 input {
-  font-size: 16px;
+  font-size: 14px;
 }
 table {
   width: 100%;
@@ -147,7 +146,7 @@ hr {
 }
 @media (max-width: 720px) {
   body {
-    font-size: 18px;
+    font-size: 14px;
   }
   main {
     padding: 1em;
