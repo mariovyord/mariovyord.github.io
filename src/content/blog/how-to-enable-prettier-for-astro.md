@@ -1,5 +1,5 @@
 ---
-title: "How to enable Prettier for Astro"
+title: "How to enable format-on-save for Astro in VS Code"
 description: "To enable format-on-save in VS Code for an Astro project, you need to add a few lines of configuration"
 pubDate: "February 29 2024"
 ---
