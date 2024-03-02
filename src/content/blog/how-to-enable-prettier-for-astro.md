@@ -6,7 +6,7 @@ pubDate: "February 29 2024"
 
 If you have an [Astro](https://astro.build/) project and your Prettier extension in VS Code isn't formatting files on save, fear not. There are just a few lines of configuration needed.
 
-All you need do is to add the following to your `settings.json`:
+All you need do is to add the following to your `settings.json` in VS Code:
 
 ```js
   "prettier.documentSelectors": ["**/*.astro"],
@@ -17,7 +17,7 @@ All you need do is to add the following to your `settings.json`:
 
 ## How to open `settings.json`
 
-Fastest way to open the file is:
+Fastest way to open the file in VS Code is:
 
 - Windows: press `Ctrl` + `Shift` + `P`
 - Mac: press `⌘` + `Shift` + `P`
@@ -32,6 +32,6 @@ Fastest way to open the file is:
 
 3. Open `settings.json` and make sure `"editor.formatOnSave": true` is present.
 
-4. Then if you add the astro/prettier config from above, it should do the job.
+4. Then if you add the astro/prettier config from the above, it should do the job.
 
 And that's it! Go and try it out - `Prettier` should now format your `.astro` files on save.
