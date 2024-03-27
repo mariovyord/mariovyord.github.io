@@ -65,7 +65,7 @@ const posts = (await getCollection("blog")).sort(
         <header>
           <h3 class="title">Latest posts</h3>
         </header>
-        <section class="blog-list">
+        <section>
           <ul>
             {
               posts.slice(0, 3).map((post) => (
@@ -94,15 +94,11 @@ const posts = (await getCollection("blog")).sort(
           text-decoration: none;
           color: rgb(var(--gray));
         }
-        .blog-list {
-          padding: 20px;
-          border: 1px solid rgb(var(--gray-light));
-          border-radius: 5px;
-        }
+        
         ul {
           display: flex;
           flex-wrap: wrap;
-          gap: 2rem;
+          gap: 1.5rem;
           list-style-type: none;
           margin: 0;
           padding: 0;
