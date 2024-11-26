@@ -13,15 +13,43 @@ body {
     font-family: var(--font-family);
 }
 
-.hero_section {
+/* Navbar */
+
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+    height: 80px;
+    background-color: var(--background-color);
+}
+
+.navbar_list {
+    display: flex;
+    list-style: none;
+}
+
+.navbar_item {
+    margin: 0 10px;
+}
+
+.navbar_link {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+/* Hero */
+
+.hero {
     width: 100%;
     min-height: calc(100vh - 160px);
     padding: 4px;
     display: flex;
-    align-items: middle;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
 }
 
-.hero_content {
+.greeting {
     margin-left: auto;
     margin-right: auto;
     margin-top: 0;
@@ -29,16 +57,69 @@ body {
     width: fit-content;
 }
 
-.hero_title {
+.greeting_heading {
     font-weight: bolder;
     font-size: 6rem;
     margin-bottom: 5px;
     line-height: 1.5;    
 }
 
-.hero_title_link {
+.greeting_link {
     color: var(--primary-color);
     text-decoration: none;
+}
+
+.terminal {
+    background-color: var(--secondary-color);
+    border-radius: .625rem;
+    width: 100%;
+    max-width: 800px;
+    height: calc(100% - 80px);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal_toolbar {
+    background-color: #d3d3d3;
+    color: var(--text-color);
+    border-top-left-radius: .625rem;
+    border-top-right-radius: .625rem;
+    padding: .3rem;
+    display: flex;
+    align-items: center;
+}
+
+.terminal_heading {
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+}
+
+.terminal_display {
+    padding: 20px;
+    height: 100%;
+    flex-grow: 1;
+    overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.terminal_entry {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.terminal_input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    outline: none; 
+    font-size: 0.9rem;
 }
 
 
