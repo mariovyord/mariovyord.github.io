@@ -18,18 +18,6 @@
         <li class="navbar_item">
           <a href="#hero" class="navbar_link">Home</a>
         </li>
-        <li class="navbar_item">
-          <a href="#games" class="navbar_link">Games</a>
-        </li>
-        <li class="navbar_item">
-          <a href="#about" class="navbar_link">About</a>
-        </li>
-        <li class="navbar_item">
-          <a href="#projects" class="navbar_link">Projects</a>
-        </li>
-        <li class="navbar_item">
-          <a href="#footer" class="navbar_link">Contact</a>
-        </li>
       </ul>
     </nav>
 
@@ -62,9 +50,9 @@
           <h6 class="terminal_heading">Command Prompt</h6>
         </div>
         <div class="terminal_display">
-          <div>
+          <div id="terminal_entries_box">
             <p class="terminal_entry">
-              Personal Website [Version 24.12.2022.10:25]
+              Personal Website [Version 26.11.2024.21:06]
             </p>
             <p class="terminal_entry">
               (c) Mario Yordanov. All rights reserved.
@@ -72,9 +60,12 @@
           </div>
           <div>
             <input
+              id="terminal_input"
               type="text"
               class="terminal_input"
               placeholder="Type 'help' for a list of commands"
+              onkeydown="handleInput(event)"
+              autofocus
             />
           </div>
         </div>
@@ -92,5 +83,7 @@
 
     <!-- Footer with contacts -->
     <footer></footer>
+
+    <script src="scripts/terminal.js"></script>
   </body>
 </html>
