@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Web Dev - Mario Yordanov</title>
+    <title>Mario Yordanov | Web Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/common.css" />
   </head>
   <body>
     <!-- Hero section with console and character that can jump on the title -->
     <section id="hero" class="hero_section">
       <div class="hero_content">
         <h1 class="hero_title">
-          <a href="#about"> &lt; Hi, I&apos;m Mario /&gt; </a>
+          <a href="#about" class="hero_title_link">
+            &lt; Hi, I&apos;m Mario /&gt;
+          </a>
         </h1>
       </div>
-      <div id="console"></div>
+      <div id="terminal" class="terminal">
+        <div class="terminal_toolbar"></div>
+        <div class="terminal_display"></div>
+      </div>
     </section>
+
     <!-- Game section where you can play Space Invaders or Tic-Tac-Toe -->
     <section id="games"></section>
+
     <!-- About section with skills list -->
     <section id="about"></section>
+
     <!-- Projects section with some links to GitHub -->
     <section id="projects"></section>
+
     <!-- Footer with contacts -->
     <footer></footer>
   </body>

@@ -1,0 +1,44 @@
+:root {
+    --primary-color: #4fba3f; 
+    --secondary-color: #2d3748; 
+    --background-color: #1e293b;
+    --text-color: #ffffff; 
+    --accent-color: #38b2ac; 
+    --font-family: "Source Code Pro", monospace;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+}
+
+.hero_section {
+    width: 100%;
+    min-height: calc(100vh - 160px);
+    padding: 4px;
+    display: flex;
+    align-items: middle;
+}
+
+.hero_content {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: fit-content;
+}
+
+.hero_title {
+    font-weight: bolder;
+    font-size: 6rem;
+    margin-bottom: 5px;
+    line-height: 1.5;    
+}
+
+.hero_title_link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+
