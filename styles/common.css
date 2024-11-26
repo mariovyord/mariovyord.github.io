@@ -59,9 +59,35 @@ body {
 
 .greeting_heading {
     font-weight: bolder;
-    font-size: 6rem;
+    font-size: 2rem;
     margin-bottom: 5px;
-    line-height: 1.5;    
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap; 
+}
+
+@media (min-width: 480px) {
+    .greeting_heading {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .greeting_heading {
+        font-size: 4rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .greeting_heading {
+        font-size: 5rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .greeting_heading {
+        font-size: 6rem;
+    }
 }
 
 .greeting_link {
