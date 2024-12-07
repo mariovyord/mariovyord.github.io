@@ -22,7 +22,7 @@
     </nav>
 
     <!-- Hero section with console and character that can jump on the title -->
-    <section id="hero" class="hero">
+    <section id="hero" class="hero section">
       <div class="greeting">
         <h1 class="greeting_heading">
           <a href="#about" class="greeting_link">
@@ -72,11 +72,45 @@
       </div>
     </section>
 
-    <!-- Game section where you can play Space Invaders or Tic-Tac-Toe -->
-    <section id="games"></section>
-
     <!-- About section with skills list -->
-    <section id="about"></section>
+    <section id="about" class="about section">
+      <br>
+        <h2>About me</h2>
+        <p>
+          I am a web developer with a passion for creating interactive and
+          user-friendly websites. In my line of work, I build enterprise
+          applications with Angular, Bootstrap 5, and many other libraries, and
+          I do end-to-end automation with Playwright.
+        </p>
+      </br>
+        <p>
+          This website is made with vanilla HTML, CSS, and JavaScript. It's my
+          place to experiment and have fun with code.
+        </p>
+      </div>
+    </section>
+
+    <!-- Game section where you can play Space Invaders or Tic-Tac-Toe -->
+    <section id="playground" class="playground section">
+      <h2>Playground</h2>
+      <div>
+        <div>
+          <h3>Cosmic Invaders</h3>
+          <p>A simple game where you can shoot aliens and earn points.</p>
+          <p>Use the arrow keys to move and the space bar to shoot.</p>
+          <p>
+            <a href="https://github.com/mariovyord/cosmic-invaders">GitHub</a>
+          </p>
+        </div>
+        <iframe
+          class="cosmic-invaders"
+          title="Cosmic Invaders Game"
+          src="https://cosmic-invaders-one.vercel.app/"
+          width="1034"
+          height="586"
+        ></iframe>
+      </div>
+    </section>
 
     <!-- Projects section with some links to GitHub -->
     <section id="projects"></section>

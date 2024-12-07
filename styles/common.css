@@ -5,12 +5,33 @@
     --text-color: #ffffff; 
     --accent-color: #38b2ac; 
     --font-family: "Source Code Pro", monospace;
+    --max-width: 1024px;
 }
 
 body {
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: var(--font-family);
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+a {
+    color: var(--primary-color)
+}
+
+.section {
+    margin-bottom: 6rem;
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Navbar */
@@ -37,6 +58,8 @@ body {
     text-decoration: none;
     color: var(--primary-color);
 }
+
+
 
 /* Hero */
 
@@ -148,4 +171,9 @@ body {
     font-size: 0.9rem;
 }
 
+/* Playground */
 
+.cosmic-invaders {
+    margin-top: 1rem;
+    border: none;
+}
