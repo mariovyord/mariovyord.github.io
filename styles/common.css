@@ -57,9 +57,22 @@ a {
 .navbar_link {
     text-decoration: none;
     color: var(--primary-color);
+    display: inline-block;
+    padding-right: 8px;
+    position: relative;
 }
 
-
+.navbar_link:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    box-shadow: 3px 0 5px var(--primary-color);
+    border-radius: 5px;
+}
 
 /* Hero */
 
