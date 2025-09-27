@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mario Yordanov | Front-End Engineer</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='black'/%3E%3Ctext x='7' y='23' font-size='20' font-family='monospace' fill='%2300FF00'%3E%3E_%3C/text%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --terminal-green: #0f0;
+        --terminal-green-dim: rgba(0, 255, 0, 0.2);
+        --terminal-yellow: #ff0;
+        --bg-dark: #000;
+        --bg-panel: rgba(0, 20, 0, 0.85);
+        --border-glow: 0 0 0.625rem rgba(0, 255, 0, 0.5);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      body {
+        font-family: "Courier New", monospace;
+        background-color: var(--bg-dark);
+        color: var(--terminal-green);
+        min-height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: fixed;
+      }
+      .info-panel {
+        background: var(--bg-panel);
+        border: 0.0625rem solid var(--terminal-green);
+        border-radius: 0.3125rem;
+        padding: 1.75rem 1.25rem;
+        box-shadow: var(--border-glow);
+        max-width: 95vw;
+        width: 23.75rem;
+        z-index: 10;
+        box-sizing: border-box;
+      }
+      .terminal-header {
+        position: relative;
+        padding-top: 1.5625rem;
+        padding-bottom: 1.5625rem;
+        margin-bottom: 0.9375rem;
+        border-bottom: 0.0625rem solid var(--terminal-green-dim);
+      }
+      .terminal-header::before {
+        content: "$ bio ~";
+        position: absolute;
+        top: -1.75rem;
+        left: -1.25rem;
+        right: -1.25rem;
+        height: 1.5rem;
+        background-color: rgba(0, 40, 0, 0.9);
+        border-bottom: 0.0625rem solid var(--terminal-green);
+        color: var(--terminal-green);
+        font-size: 0.8em;
+        padding: 0.125rem 0.625rem;
+        display: flex;
+        align-items: center;
+        border-radius: 0.3125rem 0.3125rem 0 0;
+      }
+      .info-panel h1 {
+        font-size: 1.3em;
+        margin-bottom: 0.625rem;
+        color: var(--terminal-green);
+        font-weight: bold;
+      }
+      .info-panel p,
+      .info-panel div {
+        margin-bottom: 0.9375rem;
+        line-height: 1.6;
+      }
+      .section {
+        margin-bottom: 1.25rem;
+        position: relative;
+      }
+      .section::before {
+        content: ">";
+        position: absolute;
+        left: -0.9375rem;
+        color: var(--terminal-green);
+      }
+      .info-panel a {
+        color: var(--terminal-yellow);
+        text-decoration: none;
+        border-bottom: 0.0625rem dashed var(--terminal-yellow);
+        transition: all 0.2s ease;
+      }
+      .info-panel a:hover {
+        color: #fff;
+        border-bottom: 0.0625rem solid #fff;
+      }
+      .blinking-cursor::after {
+        content: "|";
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      /* Terminal command button styles */
+      .terminal-command {
+        margin-top: 1.25rem;
+        padding-top: 0.9375rem;
+        border-top: 0.0625rem solid var(--terminal-green-dim);
+      }
+      .terminal-command::before,
+      .exit-command::before {
+        content: "$ ";
+        color: var(--terminal-green);
+      }
+      .exit-command {
+        position: absolute;
+        top: -2.5rem;
+        left: 0;
+        background: var(--bg-panel);
+        padding: 0.5rem 1rem;
+        border: 0.0625rem solid var(--terminal-green);
+        border-radius: 0.3125rem;
+        box-shadow: var(--border-glow);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .game-container.active .exit-command {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .switch-btn {
+        background: transparent;
+        border: none;
+        color: var(--terminal-green);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1em;
+        padding: 0;
+        position: relative;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      .switch-btn:hover {
+        color: var(--terminal-yellow);
+      }
+      .switch-btn::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -0.125rem;
+        width: 100%;
+        height: 0.0625rem;
+        background: var(--terminal-green);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      .switch-btn:hover::after {
+        transform: scaleX(1);
+      }
+      .game-container {
+        position: absolute;
+        width: 23.75rem;
+        max-width: 95vw;
+        height: auto;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .game-instructions,
+      .game-reset {
+        text-align: center;
+        padding: 0.625rem;
+        font-size: 0.9em;
+        color: var(--terminal-green);
+        opacity: 0.8;
+      }
+      .game-reset {
+        display: none;
+      }
+      .game-reset button {
+        background: var(--bg-panel);
+        border: 0.0625rem solid var(--terminal-green);
+        color: var(--terminal-green);
+        padding: 0.5rem 1rem;
+        border-radius: 0.3125rem;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1em;
+        transition: all 0.3s ease;
+      }
+      .game-reset button:hover {
+        background: var(--terminal-green);
+        color: var(--bg-dark);
+      }
+      .game-container.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .info-panel.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #canvas {
+        border: 0.0625rem solid var(--terminal-green);
+        border-radius: 0.3125rem;
+        box-shadow: var(--border-glow);
+        background: var(--bg-panel);
+        width: 100%;
+        height: 100%;
+      }
+
+      @media (max-width: 37.5rem) {
+        .terminal-header {
+          padding-top: 1.25rem;
+          padding-bottom: 1.25rem;
+        }
+        .section {
+          margin-bottom: 0.9375rem;
+        }
+        .info-panel h1 {
+          font-size: 1.2em;
+        }
+        .info-panel p,
+        .info-panel div {
+          margin-bottom: 0.625rem;
+        }
+        .switch-btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.9em;
+        }
+        .exit-command {
+          top: -2.8125rem;
+          width: auto;
+        }
+        .game-container {
+          height: 25rem;
+        }
+        #canvas {
+          height: 100%;
+        }
+      }
+
+      /* === Star Wars Style Enhancements (name + contacts) === */
+      .info-panel.star-wars {
+        position: relative;
+        background: #000 !important;
+        overflow: hidden;
+      }
+      .info-panel.star-wars::before,
+      .info-panel.star-wars::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+            circle at 10% 15%,
+            rgba(255, 255, 255, 0.6) 0 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 70% 40%,
+            rgba(255, 255, 255, 0.5) 0 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 30% 75%,
+            rgba(255, 255, 255, 0.4) 0 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 85% 85%,
+            rgba(255, 255, 255, 0.5) 0 1px,
+            transparent 1px
+          );
+        background-size: 220px 220px, 260px 260px, 300px 300px, 340px 340px;
+        animation: starfield 80s linear infinite;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .info-panel.star-wars::after {
+        filter: blur(1px);
+        opacity: 0.35;
+        animation-direction: reverse;
+      }
+
+      @keyframes starfield {
+        to {
+          background-position: 0 -2000px, 0 -1600px, 0 -1200px, 0 -1000px;
+        }
+      }
+
+      .info-panel.star-wars h1 {
+        font-size: 1.9em;
+        letter-spacing: 2px;
+        color: #ffe81f !important;
+        text-shadow: 0 0 4px #ffe81f, 0 0 8px #ffc400, 0 0 14px #ffea8a;
+        animation: title-zoom 5s ease-out forwards;
+        font-weight: 700;
+      }
+      @keyframes title-zoom {
+        0% {
+          transform: scale(3) translateY(160px);
+          opacity: 0;
+        }
+        40% {
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .info-panel.star-wars .terminal-header {
+        border-bottom: none;
+        padding-bottom: 10px;
+      }
+
+      .info-panel.star-wars .section p {
+        color: #d6d6d6;
+        font-weight: 500;
+      }
+      .info-panel.star-wars .section p:first-child {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+        color: #999;
+        margin-bottom: 8px;
+      }
+
+      .info-panel.star-wars a {
+        color: #ffe81f !important;
+        border-bottom: 1px solid rgba(255, 232, 31, 0.4) !important;
+        text-shadow: 0 0 4px #ffe81f80, 0 0 10px #ffe81f40;
+        transition: all 0.25s ease;
+      }
+      .info-panel.star-wars a:hover {
+        border-bottom-color: #ffe81f !important;
+        text-shadow: 0 0 6px #ffe81f, 0 0 14px #ffc400;
+      }
+
+      /* Subtle crawl-like upward drift for contact lines */
+      .info-panel.star-wars .section {
+        animation: crawl-float 30s linear infinite;
+      }
+      @keyframes crawl-float {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-12px);
+        }
+      }
+
+      /* Keep buttons readable on dark */
+      .info-panel.star-wars .switch-btn {
+        color: #ffe81f;
+      }
+      .info-panel.star-wars .switch-btn:hover {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="info-panel star-wars">
+      <div class="terminal-header">
+        <h1 class="blinking-cursor">Hi, I'm Mario Yordanov</h1>
+        <p>Front-End Engineer based in Bulgaria</p>
+      </div>
+      <div class="section">
+        <p>Let's connect! Reach out to me at:</p>
+        <p>
+          📧
+          <a href="mailto:mariovyordanov@gmail.com">mariovyordanov@gmail.com</a>
+        </p>
+        <p>
+          💼
+          <a href="https://www.linkedin.com/in/mariovyordanov/" target="_blank"
+            >linkedin.com/in/mariovyordanov</a
+          >
+        </p>
+        <p>
+          💻
+          <a href="https://github.com/mariovyord" target="_blank"
+            >github.com/mariovyord</a
+          >
+        </p>
+      </div>
+      <!-- <div class="terminal-command">
+        <button class="switch-btn" onclick="toggleView()">
+          execute game.sh
+        </button>
+      </div> -->
+    </div>
+
+    <div class="game-container">
+      <div class="exit-command">
+        <button class="switch-btn" onclick="toggleView()">exit</button>
+      </div>
+      <canvas id="canvas"></canvas>
+      <div class="game-instructions">
+        <p>← → Move left and right</p>
+        <p>Avoid <span style="color: red">red</span> blocks</p>
+      </div>
+      <div class="game-reset">
+        <button onclick="resetGame()">Reset Game</button>
+      </div>
+    </div>
+
+    <div id="follow-ship" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="64" height="64">
+        <!-- body -->
+        <ellipse
+          cx="32"
+          cy="30"
+          rx="16"
+          ry="22"
+          fill="#7ea7ff"
+          stroke="#1d2b53"
+          stroke-width="3"
+        />
+        <!-- cockpit -->
+        <circle cx="32" cy="20" r="8" fill="white" opacity="0.8" />
+        <!-- fins -->
+        <path
+          d="M16 38 L6 48 L18 46 Z"
+          fill="#ff6b6b"
+          stroke="#1d2b53"
+          stroke-width="3"
+        />
+        <path
+          d="M48 38 L58 48 L46 46 Z"
+          fill="#ff6b6b"
+          stroke="#1d2b53"
+          stroke-width="3"
+        />
+        <!-- engine -->
+        <rect x="28" y="48" width="8" height="8" rx="2" fill="#1d2b53" />
+      </svg>
+    </div>
+
+    <!-- Bottom-right giant green alien monster -->
+    <div id="corner-monster" aria-hidden="true">
+      <svg viewBox="0 0 320 320" width="100%" height="100%" role="img">
+        <defs>
+          <radialGradient id="g" cx="50%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#8efe73" />
+            <stop offset="70%" stop-color="#44c245" />
+            <stop offset="100%" stop-color="#2b9b31" />
+          </radialGradient>
+          <filter id="gooShadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow
+              dx="0"
+              dy="6"
+              stdDeviation="6"
+              flood-color="#0e3d13"
+              flood-opacity="0.45"
+            />
+          </filter>
+        </defs>
+
+        <!-- big blobby body -->
+        <ellipse
+          cx="170"
+          cy="190"
+          rx="130"
+          ry="110"
+          fill="url(#g)"
+          filter="url(#gooShadow)"
+        />
+        <ellipse
+          cx="150"
+          cy="200"
+          rx="150"
+          ry="120"
+          fill="url(#g)"
+          opacity="0.9"
+        />
+
+        <!-- belly shine -->
+        <ellipse
+          cx="140"
+          cy="155"
+          rx="60"
+          ry="35"
+          fill="#b7ffb1"
+          opacity="0.35"
+        />
+
+        <!-- tentacles (curvy paths) -->
+        <g
+          fill="url(#g)"
+          stroke="#177a22"
+          stroke-width="6"
+          stroke-linecap="round"
+        >
+          <path d="M130 250 C 110 290, 80 310, 72 320" />
+          <path d="M170 255 C 165 300, 140 325, 130 340" />
+          <path d="M210 250 C 235 295, 260 320, 290 330" />
+          <path d="M95 240 C 70 270, 52 295, 40 330" />
+          <path d="M235 245 C 255 275, 285 300, 315 315" />
+        </g>
+
+        <!-- mouth -->
+        <ellipse
+          cx="170"
+          cy="200"
+          rx="46"
+          ry="22"
+          fill="#0a3b0f"
+          opacity="0.9"
+        />
+        <path
+          d="M135 200 Q170 220 205 200"
+          fill="none"
+          stroke="#1aff6a"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+
+        <!-- placeholder eyes (you can swap for googly eyes with JS) -->
+        <g id="eyes">
+          <circle cx="135" cy="165" r="18" fill="white" />
+          <circle cx="205" cy="165" r="18" fill="white" />
+          <circle cx="139" cy="167" r="7" fill="#0f1e14" />
+          <circle cx="201" cy="167" r="7" fill="#0f1e14" />
+        </g>
+
+        <!-- tiny warts -->
+        <g fill="#6adf59" opacity="0.7">
+          <circle cx="95" cy="190" r="6" />
+          <circle cx="120" cy="220" r="5" />
+          <circle cx="200" cy="230" r="5" />
+          <circle cx="230" cy="190" r="6" />
+          <circle cx="170" cy="145" r="4" />
+          <circle cx="150" cy="175" r="3" />
+        </g>
+      </svg>
+    </div>
+
+    <style>
+      :root {
+        --monster-size: clamp(220px, 28vmin, 380px);
+      }
+      #corner-monster {
+        position: fixed;
+        right: -10px; /* nudge into the corner */
+        bottom: -8px;
+        width: var(--monster-size);
+        height: var(--monster-size);
+        pointer-events: none; /* never block clicks */
+        z-index: 9999; /* on top */
+        transform-origin: 80% 90%;
+        animation: wobble 4.5s ease-in-out infinite;
+      }
+      @keyframes wobble {
+        0%,
+        100% {
+          transform: scale(1) rotate(0deg) translateY(0);
+        }
+        50% {
+          transform: scale(1.02) rotate(-1.4deg) translateY(-3px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #corner-monster {
+          animation: none;
+        }
+      }
+    </style>
+
+    <script>
+      (() => {
+        const left = document.querySelector("#eyes circle:nth-of-type(3)");
+        const right = document.querySelector("#eyes circle:nth-of-type(4)");
+        const L = { x: 135, y: 165 },
+          R = { x: 205, y: 165 }; // eye centers from SVG
+        const max = 5; // max pupil offset
+
+        window.addEventListener(
+          "pointermove",
+          (e) => {
+            const t = { x: e.clientX, y: e.clientY };
+            const move = (eye, c) => {
+              const dx = t.x - c.x,
+                dy = t.y - c.y;
+              const len = Math.hypot(dx, dy) || 1;
+              const ox = (dx / len) * max,
+                oy = (dy / len) * max;
+              eye.setAttribute("cx", (c.x + ox).toFixed(1));
+              eye.setAttribute("cy", (c.y + oy).toFixed(1));
+            };
+            move(left, L);
+            move(right, R);
+          },
+          { passive: true }
+        );
+      })();
+    </script>
+
+    <style>
+      #follow-ship {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 64px;
+        height: 64px;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transform-origin: 50% 50%;
+        z-index: 99999;
+        will-change: transform;
+      }
+
+      /* fire particles */
+      .flame {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        pointer-events: none;
+        background: radial-gradient(
+          circle at center,
+          #ffd166 0%,
+          #ff6b6b 70%,
+          transparent 100%
+        );
+        opacity: 0.8;
+        z-index: 99998;
+        transform: translate(-50%, -50%);
+        animation: flame-fade 0.6s forwards;
+      }
+
+      @keyframes flame-fade {
+        to {
+          transform: translate(-50%, -50%) scale(0.2);
+          opacity: 0;
+        }
+      }
+    </style>
+
+    <script>
+      (() => {
+        const ship = document.getElementById("follow-ship");
+
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let x = targetX,
+          y = targetY;
+        let rotation = 0;
+
+        const easePos = 0.15;
+        const easeRot = 0.15;
+
+        window.addEventListener(
+          "pointermove",
+          (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+          },
+          { passive: true }
+        );
+
+        function spawnFlame(x, y) {
+          const flame = document.createElement("div");
+          flame.className = "flame";
+          flame.style.left = x + "px";
+          flame.style.top = y + "px";
+
+          // random size and wobble
+          const scale = 0.5 + Math.random() * 0.8;
+          flame.style.transform += ` scale(${scale})`;
+          flame.style.filter = `blur(${Math.random() * 2}px)`;
+
+          document.body.appendChild(flame);
+          setTimeout(() => flame.remove(), 600);
+        }
+
+        function animate() {
+          x += (targetX - x) * easePos;
+          y += (targetY - y) * easePos;
+
+          const dx = targetX - x,
+            dy = targetY - y;
+          const desired = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
+          rotation += (desired - rotation) * easeRot;
+
+          ship.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+
+          // spawn flame behind ship (slightly below center)
+          const offset = 32; // distance from ship center
+          const rad = ((rotation - 90) * Math.PI) / 180;
+          const flameX = x - Math.cos(rad) * offset;
+          const flameY = y - Math.sin(rad) * offset;
+          spawnFlame(flameX, flameY);
+
+          requestAnimationFrame(animate);
+        }
+        animate();
+      })();
+    </script>
+    <canvas id="space-bg"></canvas>
+
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: black; /* fallback */
+      }
+      #space-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1; /* behind everything */
+      }
+    </style>
+
+    <script>
+      (() => {
+        const canvas = document.getElementById("space-bg");
+        const ctx = canvas.getContext("2d");
+
+        let stars = [];
+        const numStars = 200;
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          stars = Array.from({ length: numStars }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: 0.2 + Math.random() * 0.5,
+            alpha: 0.5 + Math.random() * 0.5,
+            twinkle: Math.random() * 0.05,
+          }));
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        function draw() {
+          ctx.fillStyle = "black";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          stars.forEach((star) => {
+            star.y += star.speed;
+            if (star.y > canvas.height) {
+              star.y = 0;
+              star.x = Math.random() * canvas.width;
+            }
+
+            // twinkling effect
+            star.alpha += (Math.random() - 0.5) * star.twinkle;
+            star.alpha = Math.max(0.2, Math.min(1, star.alpha));
+
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+            ctx.fill();
+          });
+
+          requestAnimationFrame(draw);
+        }
+        draw();
+      })();
+    </script>
+
+    <script>
+      let isGame = false;
+      let gameInstance = null;
+
+      function resetGame() {
+        if (gameInstance) {
+          gameInstance.reset();
+          gameInstance.start();
+        }
+      }
+
+      function toggleView() {
+        const btn = document.querySelector(".switch-btn");
+        const bio = document.querySelector(".info-panel");
+        const game = document.querySelector(".game-container");
+
+        isGame = !isGame;
+
+        if (isGame) {
+          btn.textContent = "Show Bio";
+          bio.classList.add("hidden");
+          game.classList.add("active");
+          // Initialize game if not already initialized
+          if (!window.gameInitialized) {
+            gameInstance = initGame();
+          } else {
+            // Reset the game when switching back to it
+            gameInstance.reset();
+            gameInstance.start();
+          }
+        } else {
+          btn.textContent = "execute game.sh";
+          bio.classList.remove("hidden");
+          game.classList.remove("active");
+        }
+      }
+
+      function initGame() {
+        const canvas = document.getElementById("canvas");
+        const container = document.querySelector(".game-container");
+        const bio = document.querySelector(".info-panel");
+
+        // Set canvas size to match bio panel size
+        const bioHeight = bio.offsetHeight;
+        canvas.width = container.offsetWidth;
+        canvas.height = bioHeight;
+        container.style.height = `${bioHeight}px`;
+
+        window.gameInitialized = true;
+
+        /** @type {CanvasRenderingContext2D} */
+        const ctx = canvas.getContext("2d");
+
+        class Game {
+          constructor(canvas, ctx) {
+            this.canvas = canvas;
+            this.ctx = ctx;
+            this.lastTime = 0;
+            // Base speeds (pixels per second)
+            this.basePlayerSpeed = 300; // pixels per second
+            this.baseObstacleSpeed = 400; // pixels per second
+            this.spawnTimer = 0;
+            this.spawnInterval = 500; // spawn every 1 second
+            // Load high score from localStorage with a unique key
+            this.highScore =
+              parseInt(
+                localStorage.getItem("marioYordanov_terminalGame_highScore")
+              ) || 0;
+            this.playerDestroyed = false;
+            this.respawnTimer = 0; // ms remaining until respawn
+            this.invulnerableTimer = 0; // ms after respawn
+            this.reset();
+
+            // Event listeners for keyboard
+            window.addEventListener("keydown", (e) => {
+              if (e.key === "ArrowLeft") this.keys.left = true;
+              if (e.key === "ArrowRight") this.keys.right = true;
+            });
+
+            window.addEventListener("keyup", (e) => {
+              if (e.key === "ArrowLeft") this.keys.left = false;
+              if (e.key === "ArrowRight") this.keys.right = false;
+            });
+
+            // Touch controls omitted for brevity (existing code below)
+            // ...existing code...
+          }
+
+          reset() {
+            this.player = {
+              x: this.canvas.width / 2,
+              y: this.canvas.height - 30,
+              width: 30,
+              height: 30,
+            };
+            this.obstacles = [];
+            this.score = 0;
+            this.gameOver = false; // deprecated, kept for compatibility
+            this.keys = { left: false, right: false };
+            this.lastTime = 0;
+            this.spawnTimer = 0;
+            this.playerDestroyed = false;
+            this.respawnTimer = 0;
+            this.invulnerableTimer = 1000; // 1s grace at start
+          }
+
+          destroyShip() {
+            this.playerDestroyed = true;
+            this.respawnTimer = 1000; // 1 second until new ship
+            // Optional: remove some obstacles near player to avoid instant hit on respawn
+          }
+
+          respawnShip() {
+            this.playerDestroyed = false;
+            this.invulnerableTimer = 1200; // brief invulnerability
+            this.player.x = this.canvas.width / 2 - this.player.width / 2;
+            this.player.y = this.canvas.height - 30;
+          }
+
+          spawnObstacle() {
+            const width = 20 + Math.random() * 20; // variable size meteoroids
+            const obstacle = {
+              x: Math.random() * (this.canvas.width - width),
+              y: -30,
+              width: width,
+              height: 20 + Math.random() * 20,
+              rotation: Math.random() * Math.PI,
+              rotationSpeed: (Math.random() - 0.5) * 1.5,
+            };
+            this.obstacles.push(obstacle);
+          }
+
+          updatePlayer(deltaTime) {
+            if (this.playerDestroyed) return;
+            const moveAmount = this.basePlayerSpeed * (deltaTime / 1000);
+            if (this.keys.left && this.player.x > 0)
+              this.player.x -= moveAmount;
+            if (
+              this.keys.right &&
+              this.player.x < this.canvas.width - this.player.width
+            )
+              this.player.x += moveAmount;
+          }
+
+          updateObstacles(deltaTime) {
+            const obstacleSpeed = this.baseObstacleSpeed * (deltaTime / 1000);
+            this.spawnTimer += deltaTime;
+            if (this.spawnTimer >= this.spawnInterval) {
+              this.spawnObstacle();
+              this.spawnTimer = 0;
+            }
+            for (let i = this.obstacles.length - 1; i >= 0; i--) {
+              const o = this.obstacles[i];
+              o.y += obstacleSpeed;
+              o.rotation += o.rotationSpeed * (deltaTime / 1000);
+              if (o.y > this.canvas.height + 40) {
+                this.obstacles.splice(i, 1);
+                this.score += 10;
+                if (this.score > this.highScore) {
+                  this.highScore = this.score;
+                  localStorage.setItem(
+                    "marioYordanov_terminalGame_highScore",
+                    this.highScore
+                  );
+                }
+                continue;
+              }
+              if (
+                !this.playerDestroyed &&
+                this.invulnerableTimer <= 0 &&
+                this.checkCollision(this.player, o)
+              ) {
+                this.destroyShip();
+              }
+            }
+          }
+
+          updateLifecycle(deltaTime) {
+            if (this.invulnerableTimer > 0) this.invulnerableTimer -= deltaTime;
+            if (this.playerDestroyed) {
+              this.respawnTimer -= deltaTime;
+              if (this.respawnTimer <= 0) this.respawnShip();
+            }
+          }
+
+          checkCollision(rect1, rect2) {
+            return (
+              rect1.x < rect2.x + rect2.width &&
+              rect1.x + rect1.width > rect2.x &&
+              rect1.y < rect2.y + rect2.height &&
+              rect1.y + rect1.height > rect2.y
+            );
+          }
+
+          draw() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.fillStyle = "rgba(0, 20, 0, 0.85)";
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+            // Draw meteoroids
+            this.obstacles.forEach((o) => {
+              this.ctx.save();
+              this.ctx.translate(o.x + o.width / 2, o.y + o.height / 2);
+              this.ctx.rotate(o.rotation);
+              this.ctx.fillStyle = "red";
+              this.ctx.fillRect(-o.width / 2, -o.height / 2, o.width, o.height);
+              this.ctx.restore();
+            });
+
+            // Draw player or explosion indicator
+            if (!this.playerDestroyed) {
+              const blink =
+                this.invulnerableTimer > 0 &&
+                Math.floor(this.invulnerableTimer / 100) % 2 === 0;
+              if (!blink) {
+                this.ctx.fillStyle = "#0f0";
+                this.ctx.fillRect(
+                  this.player.x,
+                  this.player.y,
+                  this.player.width,
+                  this.player.height
+                );
+              }
+            } else {
+              // explosion placeholder
+              this.ctx.strokeStyle = "#f55";
+              this.ctx.lineWidth = 3;
+              this.ctx.beginPath();
+              this.ctx.arc(
+                this.canvas.width / 2,
+                this.canvas.height - 30,
+                25 + (1000 - this.respawnTimer) * 0.02,
+                0,
+                Math.PI * 2
+              );
+              this.ctx.stroke();
+            }
+
+            // HUD
+            this.ctx.fillStyle = "#0f0";
+            this.ctx.font = "1.25rem Courier New";
+            this.ctx.textAlign = "left";
+            this.ctx.fillText(`Score: ${this.score}`, 10, 30);
+            this.ctx.font = ".875rem Courier New";
+            this.ctx.fillText(`High Score: ${this.highScore}`, 10, 50);
+            if (this.playerDestroyed) {
+              this.ctx.font = ".75rem Courier New";
+              this.ctx.fillText("Respawning...", 10, 70);
+            }
+          }
+
+          start(timestamp = 0) {
+            const deltaTime = timestamp - this.lastTime;
+            this.lastTime = timestamp;
+            if (deltaTime > 0) {
+              this.updatePlayer(deltaTime);
+              this.updateObstacles(deltaTime);
+              this.updateLifecycle(deltaTime);
+            }
+            this.draw();
+            requestAnimationFrame((ts) => this.start(ts));
+          }
+        }
+
+        // Initialize the game
+        const game = new Game(canvas, ctx);
+        game.start();
+        return game;
+      }
+    </script>
+  </body>
+</html>
