@@ -1,172 +1,416 @@
+/* tiny-terminal.css - Terminal UI for the masses */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
 :root {
-  --text-color: #fff;
-  --bg-color: #0f172a;
-  --accent: #2337ff;
-  --accent-dark: #000d8a;
-  --black: 15, 18, 25;
-  --gray: 96, 115, 159;
-  --gray-light: 229, 233, 240;
-  --gray-dark: 34, 41, 57;
-  --gray-gradient: rgba(var(--gray-light), 50%), #fff;
-  --box-shadow: 0 2px 6px rgba(var(--gray), 25%),
-    0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
-}
-@font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Roboto";
-  src: url("/fonts/Roboto-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Libre Baskerville";
-  src: url("/fonts/LibreBaskerville-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Libre Baskerville";
-  src: url("/fonts/LibreBaskerville-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Libre Baskerville";
-  src: url("/fonts/LibreBaskerville-Italic.ttf") format("ttf");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-body {
-  font-family: "Libre Baskerville", Georgia, serif;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  background: linear-gradient(var(--gray-gradient)) no-repeat;
-  background-size: 100% 600px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  color: rgb(var(--gray-dark));
-  font-size: 16px;
-  line-height: 1.7;
-}
-main {
-  width: 720px;
-  max-width: calc(100% - 2em);
-  margin: auto;
-  padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Roboto";
-  font-weight: 700;
-  color: rgb(var(--black));
-  line-height: 1.2;
-}
-h1 {
-  font-size: 3.052em;
-}
-h2 {
-  font-size: 2.441em;
-}
-h3 {
-  font-size: 1.953em;
-}
-h4 {
-  font-size: 1.563em;
-}
-h5 {
-  font-size: 1.25em;
-}
-strong,
-b {
-  font-weight: 700;
-}
-a {
-  color: var(--accent);
-}
-a:hover {
-  color: var(--accent);
-}
-p {
-  margin-bottom: 1em;
-}
-.prose p {
-  margin-bottom: 1em;
-}
-textarea {
-  width: 100%;
-  font-size: 14px;
-}
-input {
-  font-size: 14px;
-}
-table {
-  width: 100%;
-}
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-code {
-  padding: 2px 5px;
-  background-color: rgb(var(--gray-light));
-  border-radius: 2px;
-}
-pre {
-  padding: 1.5em;
-  border-radius: 8px;
-}
-pre > code {
-  all: unset;
-}
-blockquote {
-  border-left: 4px solid var(--accent);
-  padding: 0 0 0 20px;
-  margin: 0px;
-  font-size: 1.333em;
-}
-hr {
-  border: none;
-  border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-  body {
-    font-size: 14px;
-  }
-  main {
-    padding: 1em;
-  }
+    --font-family: "Fira Code", monospace;
+    --primary-color: #33ff33; 
+    --secondary-color: #119911;
+    --background-color: #0d0d0d; 
+    --text-color: var(--primary-color);
+    --grid-gap: 2.5rem;
+    --grid-padding: 1rem;
+    --max-width: 880px;
 }
 
-.sr-only {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  position: absolute !important;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-  clip: rect(1px 1px 1px 1px);
-  /* maybe deprecated but we need to support legacy browsers */
-  clip: rect(1px, 1px, 1px, 1px);
-  /* modern browsers, clip-path works inwards from each corner */
-  clip-path: inset(50%);
-  /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
-  white-space: nowrap;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.5;
+    letter-spacing: 0.05rem;
 }
+
+/* Universal Scrollbar Styling */
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    box-shadow: 0 0 5px var(--secondary-color);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-color);
+    border: 1px solid var(--secondary-color); 
+}
+
+body {
+    scrollbar-color: var(--secondary-color) var(--background-color); 
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    image-rendering: pixelated;
+    font-smooth: never;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    overflow: auto;
+    text-shadow:
+        0 0 2px var(--primary-color),
+        0 0 5px var(--primary-color),
+        0 0 20px var(--primary-color);
+    position: relative;
+}
+
+/* Vignette for Screen Curve */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 999;
+}
+
+/* Scanlines */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(51, 255, 51, 0.08) 0,
+        rgba(51, 255, 51, 0.08) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 998;
+}
+
+body {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--grid-padding);
+}
+
+@keyframes flicker {
+    0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%, 100% { opacity: 1; }
+    5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95% { opacity: 0.92; }
+}
+
+header,
+footer,
+section {
+    margin-bottom: var(--grid-gap);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: flicker 1.5s infinite alternate;
+}
+
+h1 {
+    font-size: 2.5rem; 
+}
+
+h2 {
+    font-size: 2rem; 
+}
+
+h3 {
+    font-size: 1.75rem; 
+}
+
+h4 {
+    font-size: 1.5rem; 
+}
+
+h5 {
+    font-size: 1.25rem; 
+}
+
+h6 {
+    font-size: 1rem; 
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+mark {
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+
+kbd {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.1rem 0.3rem;
+    text-shadow: 0 0 2px var(--primary-color);
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+a:focus-visible {
+    outline: 1px solid var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Buttons */
+button {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    text-shadow: 0 0 2px var(--primary-color);
+    transition: all 0.3s ease;
+    font-size: 0.875rem
+}
+
+button:hover {
+    background: var(--secondary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+button:focus-visible {
+    outline: 1px solid var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Forms */
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+input:not([type="radio"]):not([type="checkbox"]), textarea, select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--primary-color);
+    background: var(--background-color);
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 2px var(--primary-color);
+    transition: all 0.2s ease;
+}
+
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 1px solid var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Placeholder */
+::placeholder {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+/* File Upload Input */
+input[type="file"]::file-selector-button {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    text-shadow: 0 0 2px var(--primary-color);
+    transition: all 0.3s ease;
+    margin-right: 0.75rem;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: var(--secondary-color);
+    color: var(--background-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+input[type="file"]:focus-visible {
+    outline: 1px solid var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Radio & Checkbox */
+input[type="radio"], input[type="checkbox"] {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid var(--primary-color);
+    margin-right: 0.5rem;
+    background: var(--background-color);
+    transition: all 0.2s ease;
+}
+
+input[type="radio"]:checked, input[type="checkbox"]:checked {
+    background: var(--primary-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* Dialog */
+dialog {
+    padding: 1rem;
+    border: 1px solid var(--primary-color);
+    background: var(--background-color);
+    color: var(--text-color);
+    text-shadow: 0 0 2px var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+    max-width: 800px;
+    min-width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    text-shadow: 0 0 2px var(--primary-color);
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: left;
+    border: 1px solid var(--primary-color);
+}
+
+/* Blockquotes */
+blockquote {
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    border-left: 3px solid var(--primary-color);
+    background: var(--background-color);
+    font-style: italic;
+    text-shadow: 0 0 2px var(--primary-color);
+}
+
+/* Code & Pre */
+code {
+    font-family: monospace;
+    padding: 0.2rem 0.4rem;
+    text-shadow: 0 0 2px var(--primary-color);
+}
+
+pre {
+    background: var(--background-color);
+    padding: 1rem;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    overflow: auto;
+    text-shadow: 0 0 2px var(--primary-color);
+}
+
+/* Lists */
+ul, ol {
+    margin: 1rem 0 1rem 1.5rem;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+    list-style-type: disc;
+}
+
+ol li {
+    margin-bottom: 0.5rem;
+    list-style-type: decimal;
+}
+
+/* Horizontal Rule */
+hr {
+    border: none;
+    border-top: 1px solid var(--primary-color);
+    margin: 1.5rem 0;
+}
+
+/* Fieldset & Legend */
+fieldset {
+    border: 1px solid var(--primary-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+legend {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Progress Bar */
+progress {
+    width: 100%;
+    height: 0.5rem;
+    border: 1px solid var(--primary-color);
+}
+
+progress::-webkit-progress-bar {
+    background: var(--background-color);
+}
+
+progress::-webkit-progress-value {
+    background: var(--primary-color);
+}
+
+progress::-moz-progress-bar {
+    background: var(--primary-color);
+}
+
+/* Meter */
+meter {
+    width: 100%;
+    height: 0.5rem;
+    border: 1px solid var(--primary-color);
+}
+
+meter::-webkit-meter-bar {
+    background: var(--background-color);
+}
+
+meter::-webkit-meter-optimum-value {
+    background: var(--primary-color);
+}
+
+/* Details & Summary */
+details {
+    border: 1px solid var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+details > * {
+    padding: 0.5rem;
+}
+
+details:focus-within summary {
+    outline: 2px solid var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+summary {
+    background: var(--background-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+details[open] summary {
+    border-bottom: 1px solid var(--primary-color);
+}
+
+/* Library overrides */
+
+html {
+  padding: 50px;
+  overflow: hidden;
+  height: 100vh;
+}
+
+body {
+  overflow: auto;
+}
+
+

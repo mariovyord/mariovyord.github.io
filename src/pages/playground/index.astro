@@ -9,33 +9,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      ul li {
-        width: 100%;
-        text-decoration: none;
-      }
-      .title {
-        margin-bottom: 1em;
-        padding: 1em 0;
-        line-height: 1;
-      }
-      .title h1 {
-        margin: 0 0 0.5em 0;
-      }
-      @media (max-width: 720px) {
-        ul {
-          gap: 0.5em;
-        }
-      }
-    </style>
   </head>
   <body>
     <Header />
