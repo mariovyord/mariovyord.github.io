@@ -1,0 +1,55 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PostCard from "../components/PostCard.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <h1 class="title">Hi, I'm Mario Yordanov</h1>
+        <p>
+          Full stack developer with a strong focus on frontend. My main strength is in creating UIs with <b>Angular</b> and end-to-end testing with <b>Playwright</b>.
+          I also work with <b>Node.js</b>, <b>Java</b>, and <b>Spring Boot</b> on the backend, and occasionally use <b>React</b>, <b>Next.js</b>, <b>Astro</b>, and other frameworks.
+        </p>
+        <h6>Links</h6>
+        <ul>
+          <li>
+            <a href="https://www.linkedin.com/in/mariovyordanov/" target="_blank">
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/mariovyord" target="_blank">
+              GitHub
+            </a>
+          </li>
+        </ul>
+        <h6>Activities</h6>
+          <ul>
+            <li>Now Playing: <a href="https://en.wikipedia.org/wiki/Hollow_Knight:_Silksong" target="_blank">Hollow Knight: Silksong</a></li>
+            <li>Now Listening: <a href="https://youtu.be/Z-VfaG9ZN_U?si=lTYT6fp7DbCQyWmT" target="_blank">Programming / Coding / Hacking music vol.18</a></li>
+            <li>Now Rereading: <a href="https://en.wikipedia.org/wiki/Leviathan_Wakes" target="_blank">Leviathan Wakes by James S. A. Corey</a></li>
+          </ul>
+        </div>
+      </section>
+      <Footer />
+    </main>
+    <style>
+      
+    </style>
+  </body>
+</html>

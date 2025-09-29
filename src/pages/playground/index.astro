@@ -1,0 +1,57 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <div class="title">
+          <h1>Playground</h1>
+          <p><i>Some fun projects I did in my free time</i></p>
+          <hr />
+        </div>
+        <details>
+          <summary>This website</summary>
+          <div>
+            This website is built in a very simple manner with <a href="https://astro.build" target="_blank">Astro</a> and hosted on GitHub Pages.<br />
+            It's styled with my own mini CSS framework - <a href="https://mariovyord.github.io/tiny-terminal-css/index.html" target="_blank">Tiny Terminal CSS</a>.
+          </div>
+        </details>
+        <details>
+        <summary>Tiny Terminal CSS</summary>
+        <div>
+          A mini CSS framework I built for simple, responsive websites with a terminal-like design.<br />
+          No JavaScript or custom CSS classes – just semantic HTML and CSS variables.<br />
+          Check it out here: <a href="https://mariovyord.github.io/tiny-terminal-css/index.html" target="_blank">Tiny Terminal CSS</a>.
+        </div>
+      </details>
+      <details>
+        <summary>Cosmic Invaders</summary>
+        <div>
+          A simple, fun space shooter inspired by the classic Space Invaders game.<br />
+          Built with Canvas API and JavaScript.<br />
+          <a href="https://mariovyord.github.io/cosmic-invaders/index.html" target="_blank">Play Cosmic Invaders</a>
+        </div>
+      </details>
+      <details>
+        <summary>Tic Tac Toe Online</summary>
+        <div>
+          A simple Tic Tac Toe game to play online with friends or against the computer.<br />
+          Built with React, Redux, and Firebase.<br />
+          <a href="https://tic-tac-toe-online-11df9.web.app/" target="_blank">Play Tic Tac Toe Online</a>
+        </div>
+      </details>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
