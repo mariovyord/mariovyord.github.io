@@ -1,13 +1,14 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <header>
   <nav>
     <div class="internal-links">
       <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/playground">Playground</HeaderLink>
-      <!-- <HeaderLink href="/blog">Blog</HeaderLink> -->
+      <HeaderLink href="/notes">Notes</HeaderLink>
+      <ThemeToggle />
     </div>
   </nav>
 </header>
@@ -20,11 +21,17 @@ import HeaderLink from "./HeaderLink.astro";
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+  }
+  .internal-links {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
   }
   nav a {
     padding: 1em 0.5em;
-    color: var(--black);
-    border-bottom: 4px solid transparent;
+    color: var(--text-primary);
     text-decoration: none;
   }
 </style>

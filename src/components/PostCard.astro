@@ -4,7 +4,7 @@ import FormattedDate from "./FormattedDate.astro";
 const { title, pubDate, description, slug } = Astro.props;
 ---
 
-<a href={`/blog/${slug}/`}>
+<a href={`/notes/${slug}/`}>
   <p class="date">
     <FormattedDate date={pubDate} />
   </p>
@@ -13,4 +13,31 @@ const { title, pubDate, description, slug } = Astro.props;
     {description}
   </p>
 </a>
-
+<style>
+  * {
+    text-decoration: none;
+    transition: 0.2s ease;
+  }
+  a {
+    display: block;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+  }
+  .title {
+    margin: 0.3rem 0;
+    line-height: 1;
+  }
+  .date {
+    margin: 0;
+    color: rgb(var(--gray));
+  }
+  .description {
+    color: rgb(var(--gray));
+    margin: 0;
+  }
+  a:hover h4,
+  a:hover .date .description {
+    color: rgb(var(--accent));
+  }
+</style>
