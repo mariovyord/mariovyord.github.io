@@ -6,7 +6,7 @@ import PostCard from "../../components/PostCard.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("blog")).sort(
+const posts = (await getCollection("notes")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
@@ -15,15 +15,40 @@ const posts = (await getCollection("blog")).sort(
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    
+    <style>
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        width: 100%;
+        text-decoration: none;
+      }
+      .title {
+        padding: 1em 0;
+        line-height: 1;
+      }
+      .title h1 {
+        margin: 0 0 0.5em 0;
+      }
+      @media (max-width: 720px) {
+        ul {
+          gap: 0.5em;
+        }
+      }
+    </style>
   </head>
   <body>
     <Header />
     <main>
       <section>
         <div class="title">
-          <h1>Blog</h1>
-          <p><i>No fluff, just answers</i></p>
+          <h1>Notes on...</h1>
+          <p><i>Quick thoughts on web development</i></p>
           <hr />
         </div>
         <ul>
@@ -46,4 +71,4 @@ const posts = (await getCollection("blog")).sort(
     </main>
     <Footer />
   </body>
-a</html>
+</html>
