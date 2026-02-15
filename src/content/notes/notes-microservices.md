@@ -4,6 +4,9 @@ description: "Key takeaways from reading Fowler & Lewis on Microservice Architec
 pubDate: "February 8 2025"
 ---
 
+👉 Key takeaways from 
+[Microservices by Martin Fowler and James Lewis](https://martinfowler.com/articles/microservices.html) 
+
 Microservices aren’t really a new idea. The name is relatively recent, but the principles behind it go back decades. What *is* new is how viable the approach has become thanks to cloud infrastructure, automation, and better tooling.
 
 > “Microservice Architecture” describes a way of designing software applications as suites of independently deployable services.
@@ -167,5 +170,4 @@ A common recommendation still stands:
 
 Microservices are not a goal. They’re a tool.
 
-👉 Learn more on
-[Microservices by Martin Fowler and James Lewis](https://martinfowler.com/articles/microservices.html) 
+
