@@ -16,5 +16,8 @@
     "@astrojs/sitemap": "^3.1.1",
     "astro": "^4.4.6",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   }
 }
