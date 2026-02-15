@@ -1,6 +1,6 @@
 ---
-title: "Notes on JavaScript Intl for Localization"
-description: "Key takeaways on using JavaScript Intl for localizing dates, numbers, and lists."
+title: "Notes on... JavaScript Intl for Localization"
+description: "Localizing dates, numbers, and lists."
 pubDate: "March 18 2025"
 ---
 
@@ -11,7 +11,7 @@ more according to local rules.
 
 ## Format Numbers with `Intl.NumberFormat`
 
-Numbers look different across regions---commas, decimals, and currency
+Numbers look different across regions -- commas, decimals, and currency
 placement all vary. `Intl.NumberFormat` handles this automatically:
 
 ``` js
@@ -27,7 +27,7 @@ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' })
 // "42,50 €"
 ```
 
-Perfect for e-commerce, dashboards, or any numeric UI.
+Use this to format numbers, currencies, and percentages in a way that feels natural to users worldwide.
 
 ------------------------------------------------------------------------
 
@@ -43,13 +43,13 @@ new Intl.ListFormat().format(fruits);
 // "apples, bananas, and cherries"
 ```
 
-Use it for messages, labels, or content.
+Use this to join arrays into natural-sounding lists for any language.
 
 ------------------------------------------------------------------------
 
 ## Format Dates with `Intl.DateTimeFormat`
 
-Dates and times vary even more---order, time zones, 12h vs 24h.
+Dates and times vary even more -- order, time zones, 12h vs 24h.
 `Intl.DateTimeFormat` makes it consistent:
 
 ``` js
@@ -66,7 +66,8 @@ new Intl.DateTimeFormat('fr-FR', { dateStyle: 'full', timeStyle: 'short' })
 // "mardi 23 septembre 2025 à 17:30"
 ```
 
-Ideal for calendars, bookings, or logs.
+Format dates and times for any locale, including custom styles and time zones.
+
 
 ------------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ rtf.format(2, 'hour');
 // "in 2 hours"
 ```
 
-Great for chat apps, notifications, or activity feeds.
+Create phrases like "yesterday" or "in 2 hours" that adapt to the user's language.
 
 ------------------------------------------------------------------------
 
@@ -110,7 +111,7 @@ messages[pr.select(count)].replace("{count}", count);
 // "5 apples"
 ```
 
-Essential for dynamic messages and translations.
+Get the right plural form for numbers in any language.
 
 ------------------------------------------------------------------------
 
@@ -129,14 +130,36 @@ const regions = new Intl.DisplayNames(['en'], { type: 'region' });
 regions.of('DE'); // "Germany"
 ```
 
-Useful for settings pages, language pickers, or country dropdowns.
+Convert language and region codes into readable names for users.
 
 ------------------------------------------------------------------------
 
-## Other Handy Intl Tools
+## Sort with `Intl.Collator`
 
--   **`Intl.Collator`** -- Locale-aware sorting.\
--   **`Intl.Segmenter`** -- Split text into words/sentences.
+`Intl.Collator` lets you compare and sort strings in a way that respects language rules (accents, case, etc.).
+
+```js
+const items = ['zebra', 'äpfel', 'apple'];
+items.sort(new Intl.Collator('de').compare);
+// [ 'äpfel', 'apple', 'zebra' ]
+```
+
+Use this for sorting lists so results feel natural to users in any locale.
+
+------------------------------------------------------------------------
+
+## Split Text with `Intl.Segmenter`
+
+`Intl.Segmenter` breaks text into words, sentences, or graphemes, following language-specific rules.
+
+```js
+const segmenter = new Intl.Segmenter('en', { granularity: 'word' });
+const input = 'Hello world!';
+const words = Array.from(segmenter.segment(input), s => s.segment);
+// [ 'Hello', ' ', 'world', '!' ]
+```
+
+Great for tokenizing text, highlighting, or advanced text processing.
 
 ------------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 ---
-title: "Notes on Dynamic Import in JavaScript"
-description: "Key takeaways on using dynamic import() for lazy-loading in JavaScript."
+title: "Notes on... Dynamic Import in JavaScript"
+description: "Using dynamic import() for lazy-loading in JavaScript."
 pubDate: "January 13 2025"
 ---
 
@@ -54,7 +54,7 @@ const MarkdownPreview = lazy(() => import("./MarkdownPreview.js"));
 
 3. **Lazy-Loading a Large Third Party Library**
 
-   In one of our projects, we used dynamic `import()` to load a large emoji library only when the user opened the emoji picker:
+   In one of my projects, I have used dynamic `import()` to load a large emoji library only when the user opened the emoji picker:
 
 ```javascript
 button.addEventListener("click", async () => {

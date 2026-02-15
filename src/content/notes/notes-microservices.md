@@ -1,10 +1,8 @@
 ---
-title: "Notes on Microservice Architecture"
+title: "Notes on... Microservice Architecture"
 description: "Key takeaways from reading Fowler & Lewis on Microservice Architecture."
 pubDate: "February 8 2025"
 ---
-
-[Microservices by Martin Fowler and James Lewis](https://martinfowler.com/articles/microservices.html) 
 
 Microservices aren’t really a new idea. The name is relatively recent, but the principles behind it go back decades. What *is* new is how viable the approach has become thanks to cloud infrastructure, automation, and better tooling.
 
@@ -168,3 +166,6 @@ A common recommendation still stands:
 > Start with a well-structured monolith and split it when it becomes a problem.
 
 Microservices are not a goal. They’re a tool.
+
+👉 Learn more on
+[Microservices by Martin Fowler and James Lewis](https://martinfowler.com/articles/microservices.html) 
