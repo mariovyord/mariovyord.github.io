@@ -1,7 +1,7 @@
 ---
 title: "Notes on... Microservice Architecture"
 description: "Key takeaways from reading Fowler & Lewis on Microservice Architecture."
-pubDate: "February 8 2025"
+pubDate: "February 8 2026"
 ---
 
 👉 Key takeaways from 
