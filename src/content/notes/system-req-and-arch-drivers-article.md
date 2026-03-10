@@ -1,6 +1,6 @@
 ---
 title: "Notes on... System Requirements and Architectural Drivers"
-description: ":Laying the Groundwork for Real-World Systems"
+description: "Laying the Groundwork for Real-World Systems"
 pubDate: "April 13 2026"
 ---
 
