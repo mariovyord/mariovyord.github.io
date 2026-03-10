@@ -86,6 +86,8 @@ User flows take those use cases and turn them into step-by-step journeys.
 
 They're usually visual: boxes and arrows showing how a user moves through the system to get something done. This is where vague requirements turn into concrete paths.
 
+![Sequence diagram example](../../assets/system-req-and-arch-drivers-article/uml_sequence_diagram_example_v2.png)
+
 ### A Simple Step-by-Step Process
 
 You don't need a huge process to do this well. Something like this is often enough:
