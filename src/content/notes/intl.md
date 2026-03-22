@@ -1,5 +1,5 @@
 ---
-title: "Notes on... JavaScript Intl for Localization"
+title: "JavaScript Intl for Localization"
 description: "Localizing dates, numbers, and lists."
 pubDate: "March 18 2026"
 ---

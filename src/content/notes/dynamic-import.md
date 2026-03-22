@@ -1,5 +1,5 @@
 ---
-title: "Notes on... Dynamic Import in JavaScript"
+title: "Dynamic Import in JavaScript"
 description: "Using dynamic import() for lazy-loading in JavaScript."
 pubDate: "January 13 2026"
 ---

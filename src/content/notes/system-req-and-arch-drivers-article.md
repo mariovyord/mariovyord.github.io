@@ -1,7 +1,7 @@
 ---
-title: "Notes on... System Requirements and Architectural Drivers"
+title: "System Requirements and Architectural Drivers"
 description: "Laying the Groundwork for Real-World Systems"
-pubDate: "April 13 2026"
+pubDate: "March 22 2026"
 ---
 
 Before picking a framework, spinning up a database, or arguing about microservices vs. monoliths, there's a more fundamental question to answer: **what are we actually building, and under what conditions?**
