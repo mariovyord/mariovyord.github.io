@@ -240,7 +240,7 @@ Or, when it makes sense:
 finalPrice = order.calculatePriceFor(user);
 ```
 
-The important idea is not that every frontend app needs rich domain classes. The important idea is that business rules should not be scattered across components, templates, and event handlers.
+Not every frontend app needs rich domain classes. But business rules should not be scattered across components, templates, and event handlers.
 
 Components should mostly:
 
@@ -262,7 +262,7 @@ Domain logic can live in:
 
 The Angular style guide says components and directives should stay focused on presentation.
 
-DDD agrees.
+That goes well with DDD.
 
 A component should not know too much about how the business works. It should coordinate the UI and call domain-level code.
 
@@ -407,16 +407,6 @@ order-price.ts
 order-permissions.ts
 ```
 
-Examples:
-
-- `price.ts`
-- `money.ts`
-- `order.ts`
-- `submit-order.ts`
-- `order-api.ts`
-- `cart-store.ts`
-- `payment-result.ts`
-
 These names describe what the file contains, not only what technical category it belongs to.
 
 The goal is not "never use suffixes." Sometimes `order-api.ts`, `cart-store.ts`, or `payment-form.ts` is perfectly clear. The goal is to avoid generic technical buckets and meaningless names.
@@ -445,8 +435,6 @@ For Angular developers, it is a practical way to:
 - make state easier to understand
 - collaborate better with backend and product teams
 
-If your Angular app is growing and starting to feel messy, DDD is worth exploring, not as a strict methodology, but as a mindset.
-
-Start by renaming one vague folder, moving one business rule out of a component, or replacing one generic `utils.ts` file with a domain-specific file.
+If your Angular app is growing and starting to feel messy, DDD is worth exploring, not as just as a strict methodology, but as a mindset.
 
 Small improvements compound quickly.
