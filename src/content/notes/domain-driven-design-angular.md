@@ -1,7 +1,11 @@
 ---
 title: "Domain-Driven Design for Angular and Frontend Developers"
-description: "How DDD helps Angular teams organize frontend code around business concepts, keep components focused, and make domain logic explicit."
+description: "How DDD and the Angular Styleguide help teams organize frontend code around business concepts, keep components focused, and make domain logic explicit."
 pubDate: "May 2 2026"
+---
+
+*How DDD and the Angular Styleguide help teams organize frontend code around business concepts, keep components focused, and make domain logic explicit.*
+
 ---
 
 Domain-Driven Design (DDD) is an approach to software design that centers the business domain in how software is structured and named. It relies on close collaboration between technical and business experts, using a shared language to express business concepts, rules, and workflows clearly in code. The goal is to build software that reflects the real domain and stays easier to understand, evolve, and maintain.
@@ -438,3 +442,10 @@ For Angular developers, it is a practical way to:
 If your Angular app is growing and starting to feel messy, DDD is worth exploring, not as just as a strict methodology, but as a mindset.
 
 Small improvements compound quickly.
+
+## Further Reading
+
+- https://martinfowler.com/bliki/DomainDrivenDesign.html
+- https://martinfowler.com/bliki/EvansClassification.html
+- https://martinfowler.com/bliki/DDD_Aggregate.html
+- https://martinfowler.com/bliki/BoundedContext.html
