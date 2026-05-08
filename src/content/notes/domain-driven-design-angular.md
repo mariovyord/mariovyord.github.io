@@ -137,33 +137,32 @@ Prefer:
 
 ```plaintext
 src/
-  features/
-    orders/
-      order-list/
-        order-list.ts
-        order-list.html
-        order-list.css
-        order-list.spec.ts
-      order-details/
-        order-details.ts
-        order-details.html
-        order-details.css
-      order.ts
-      order-api.ts
-      order-store.ts
+  orders/
+    order-list/
+      order-list.ts
+      order-list.html
+      order-list.css
+      order-list.spec.ts
+    order-details/
+      order-details.ts
+      order-details.html
+      order-details.css
+    order.ts
+    order-api.ts
+    order-store.ts
 
-    cart/
-      cart-summary/
-        cart-summary.ts
-        cart-summary.html
-        cart-summary.css
-      cart.ts
-      cart-api.ts
-      cart-store.ts
+  cart/
+    cart-summary/
+      cart-summary.ts
+      cart-summary.html
+      cart-summary.css
+    cart.ts
+    cart-api.ts
+    cart-store.ts
 
-    payments/
-      payment-method/
-      payment-confirmation/
+  payments/
+    payment-method/
+    payment-confirmation/
 ```
 
 Avoid:
