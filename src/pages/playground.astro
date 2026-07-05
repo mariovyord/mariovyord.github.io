@@ -1,0 +1,73 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const title = "Playground | Mario Yordanov";
+const description = "Play a Super Mario clone built by Mario Yordanov.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <div class="title">
+          <h1>Playground</h1>
+          <p><i>A little Super Mario clone I built. Have fun!</i></p>
+          <hr />
+        </div>
+        <div class="game-wrapper">
+          <iframe
+            class="game-frame"
+            src="https://mariovyord.github.io/super-mario-clone/"
+            title="Super Mario clone game"
+            loading="lazy"
+            allow="fullscreen; gamepad; autoplay"
+          ></iframe>
+        </div>
+        <p class="game-note">
+          Can't see the game? <a
+            href="https://mariovyord.github.io/super-mario-clone/"
+            target="_blank"
+            rel="noopener">Open it in a new tab</a
+          >.
+        </p>
+      </section>
+    </main>
+    <Footer />
+    <style>
+      .title {
+        padding: 1em 0;
+        line-height: 1;
+      }
+      .title h1 {
+        margin: 0 0 0.5em 0;
+      }
+      .game-wrapper {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .game-frame {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
+        background-color: var(--bg-secondary);
+      }
+      .game-note {
+        margin-top: 1em;
+        text-align: center;
+        font-size: 0.9rem;
+        color: rgb(var(--gray));
+      }
+    </style>
+  </body>
+</html>
