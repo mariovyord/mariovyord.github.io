@@ -175,24 +175,54 @@ const {
 </html>
 
 <script>
-  // Add a copy button to every code block.
-  document.querySelectorAll("article pre").forEach((pre) => {
-    const button = document.createElement("button");
-    button.className = "copy-code";
-    button.type = "button";
-    button.textContent = "Copy";
-    pre.appendChild(button);
-    button.addEventListener("click", async () => {
-      const code = pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
-      try {
-        await navigator.clipboard.writeText(code);
-        button.textContent = "Copied!";
-        setTimeout(() => (button.textContent = "Copy"), 1500);
-      } catch {
-        button.textContent = "Failed";
-      }
+  // Add a copy button to every code block (re-runs after view transitions).
+  function addCopyButtons() {
+    document.querySelectorAll("article pre").forEach((pre) => {
+      if (pre.querySelector(".copy-code")) return;
+      const button = document.createElement("button");
+      button.className = "copy-code";
+      button.type = "button";
+      button.textContent = "Copy";
+      pre.appendChild(button);
+      button.addEventListener("click", async () => {
+        const code = pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = "Copied!";
+          spawnCoins(button);
+          setTimeout(() => (button.textContent = "Copy"), 1500);
+        } catch {
+          button.textContent = "Failed";
+        }
+      });
     });
-  });
+  }
+
+  // Little coin burst for delight when copying.
+  function spawnCoins(anchor: HTMLElement) {
+    const rect = anchor.getBoundingClientRect();
+    const originX = rect.left + rect.width / 2;
+    const originY = rect.top + rect.height / 2;
+    const count = 10;
+    for (let i = 0; i < count; i++) {
+      const coin = document.createElement("span");
+      coin.className = "coin";
+      coin.textContent = "🪙";
+      coin.style.left = `${originX}px`;
+      coin.style.top = `${originY}px`;
+      const angle = Math.PI * (0.75 + (0.5 * i) / count) + (Math.random() - 0.5);
+      const distance = 40 + Math.random() * 60;
+      const dx = Math.cos(angle) * distance;
+      const dy = -Math.abs(Math.sin(angle) * distance) - 20;
+      coin.style.setProperty("--dx", `${dx}px`);
+      coin.style.setProperty("--dy", `${dy}px`);
+      document.body.appendChild(coin);
+      coin.addEventListener("animationend", () => coin.remove());
+    }
+  }
+
+  addCopyButtons();
+  document.addEventListener("astro:page-load", addCopyButtons);
 </script>
 
 <style is:global>
@@ -220,5 +250,29 @@ const {
   article pre .copy-code:hover {
     border-color: var(--accent);
     color: var(--accent);
+  }
+  .coin {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    font-size: 1rem;
+    transform: translate(-50%, -50%);
+    animation: coin-burst 0.7s ease-out forwards;
+  }
+  @keyframes coin-burst {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) translate(0, 0) scale(0.6) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(1.1)
+        rotate(180deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .coin {
+      display: none;
+    }
   }
 </style>
