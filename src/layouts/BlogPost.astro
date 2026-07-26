@@ -4,15 +4,32 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import Tag from "../components/Tag.astro";
+import NoteStatus from "../components/NoteStatus.astro";
 
-type Props = CollectionEntry<"notes">["data"];
+type Props = CollectionEntry<"notes">["data"] & {
+  readingTime?: number;
+  prev?: { slug: string; title: string } | null;
+  next?: { slug: string; title: string } | null;
+};
 
-const { title, description, pubDate, updatedDate } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  tags = [],
+  status,
+  readingTime,
+  prev,
+  next,
+} = Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={heroImage} />
     <style>
       main {
         width: calc(100% - 2em);
@@ -25,20 +42,74 @@ const { title, description, pubDate, updatedDate } = Astro.props;
         margin: auto;
         padding: 1em;
       }
+      .hero {
+        width: 100%;
+        margin-bottom: 1.5em;
+        border-radius: 8px;
+      }
       .title {
         margin-bottom: 1em;
         padding: 1em 0;
         line-height: 1;
       }
       .title h1 {
-        margin: 0 0 0.5em 0;
+        margin: 0 0 0.3em 0;
       }
-      .date {
-        margin-bottom: 0.5em;
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75em;
         color: rgb(var(--gray));
+        font-family: "Roboto", sans-serif;
+        font-size: 0.85rem;
+      }
+      .reading-time::before {
+        content: "·";
+        margin-right: 0.75rem;
       }
       .last-updated-on {
         font-style: italic;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.75em;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 1em;
+        color: rgb(var(--gray));
+        text-decoration: none;
+        font-family: "Roboto", sans-serif;
+        font-size: 0.9rem;
+      }
+      .back-link:hover {
+        color: var(--accent);
+      }
+      .post-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        font-family: "Roboto", sans-serif;
+      }
+      .post-nav a {
+        max-width: 45%;
+        text-decoration: none;
+      }
+      .post-nav .label {
+        display: block;
+        color: rgb(var(--gray));
+        font-size: 0.75rem;
+      }
+      .post-nav .next {
+        text-align: right;
+        margin-left: auto;
       }
     </style>
   </head>
@@ -48,24 +119,106 @@ const { title, description, pubDate, updatedDate } = Astro.props;
     <main>
       <article>
         <div class="prose">
+          <a href="/notes/" class="back-link">← Back to notes</a>
           <div class="title">
-            <div class="date">
+            <div class="meta">
               <FormattedDate date={pubDate} />
-              {
-                updatedDate && (
-                  <div class="last-updated-on">
-                    Last updated on <FormattedDate date={updatedDate} />
-                  </div>
-                )
-              }
+              {status && <NoteStatus status={status} />}
+              {readingTime && <span class="reading-time">{readingTime} min read</span>}
             </div>
+            {
+              updatedDate && (
+                <div class="meta last-updated-on">
+                  Last updated on <FormattedDate date={updatedDate} />
+                </div>
+              )
+            }
             <h1>Notes on... {title}</h1>
+            {
+              tags.length > 0 && (
+                <div class="tags">
+                  {tags.map((tag) => (
+                    <Tag tag={tag} />
+                  ))}
+                </div>
+              )
+            }
             <hr />
           </div>
-          <slot />
+          {heroImage && <img class="hero" src={heroImage} alt="" />}
+          <div data-pagefind-body>
+            <slot />
+          </div>
+          <nav class="post-nav">
+            {
+              prev && (
+                <a class="prev" href={`/notes/${prev.slug}/`}>
+                  <span class="label">← Previous</span>
+                  {prev.title}
+                </a>
+              )
+            }
+            {
+              next && (
+                <a class="next" href={`/notes/${next.slug}/`}>
+                  <span class="label">Next →</span>
+                  {next.title}
+                </a>
+              )
+            }
+          </nav>
         </div>
       </article>
     </main>
     <Footer />
   </body>
 </html>
+
+<script>
+  // Add a copy button to every code block.
+  document.querySelectorAll("article pre").forEach((pre) => {
+    const button = document.createElement("button");
+    button.className = "copy-code";
+    button.type = "button";
+    button.textContent = "Copy";
+    pre.appendChild(button);
+    button.addEventListener("click", async () => {
+      const code = pre.querySelector("code")?.textContent ?? pre.textContent ?? "";
+      try {
+        await navigator.clipboard.writeText(code);
+        button.textContent = "Copied!";
+        setTimeout(() => (button.textContent = "Copy"), 1500);
+      } catch {
+        button.textContent = "Failed";
+      }
+    });
+  });
+</script>
+
+<style is:global>
+  article pre {
+    position: relative;
+  }
+  article pre .copy-code {
+    position: absolute;
+    top: 0.6em;
+    right: 0.6em;
+    padding: 0.3em 0.6em;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  article pre:hover .copy-code {
+    opacity: 0.9;
+  }
+  article pre .copy-code:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+</style>

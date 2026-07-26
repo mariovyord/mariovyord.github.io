@@ -2,6 +2,8 @@
 title: "Domain-Driven Design for Angular and Frontend Developers"
 description: "How DDD and the Angular Styleguide help teams organize frontend code around business concepts, keep components focused, and make domain logic explicit."
 pubDate: "May 2 2026"
+tags: ["frontend", "architecture", "angular"]
+status: "evergreen"
 ---
 
 *How DDD and the Angular Styleguide help teams organize frontend code around business concepts, keep components focused, and make domain logic explicit.*

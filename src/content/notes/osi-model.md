@@ -2,6 +2,8 @@
 title: "Layer 4 vs Layer 7 Load Balancing (and the OSI Model)"
 description: "When cloud docs (like Azure's) talk about Layer 4 or Layer 7, they're referring to the OSI model"
 pubDate: "April 10 2026"
+tags: ["networking", "architecture"]
+status: "evergreen"
 ---
 
 When cloud docs (like Azure's) talk about *Layer 4* or *Layer 7*,

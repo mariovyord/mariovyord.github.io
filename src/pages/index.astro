@@ -59,33 +59,33 @@ const posts = (await getCollection("notes")).sort(
         </div>
       </section>
       <hr />
-          <ul>
-            <li>Now Playing: <a href="https://www.youtube.com/watch?v=ADYppf44cTs" target="_blank">Ninja Gaiden: Ragebound</a></li>
-            <li>Now Listening: <a href="https://youtu.be/Z-VfaG9ZN_U?si=lTYT6fp7DbCQyWmT" target="_blank">Programming / Coding / Hacking music vol.18</a></li>
-            <li>Now Reading: <a href="https://www.goodreads.com/book/show/228810178-this-way-up" target="_blank">This Way Up: When Maps Go Wrong [and Why It Matters] by Mark Cooper-Jones and Jay Foreman</a></li>
-          </ul>
-        </div>
-      <!-- <section>
-        <header>
-          <h3 class="title">Latest posts</h3>
+      <ul class="now-list">
+        <li>Now Playing: <a href="https://www.youtube.com/watch?v=ADYppf44cTs" target="_blank">Ninja Gaiden: Ragebound</a></li>
+        <li>Now Listening: <a href="https://youtu.be/Z-VfaG9ZN_U?si=lTYT6fp7DbCQyWmT" target="_blank">Programming / Coding / Hacking music vol.18</a></li>
+        <li>Now Reading: <a href="https://www.goodreads.com/book/show/228810178-this-way-up" target="_blank">This Way Up: When Maps Go Wrong [and Why It Matters] by Mark Cooper-Jones and Jay Foreman</a></li>
+      </ul>
+      <section class="recent">
+        <header class="recent-header">
+          <h2 class="title">Recent notes</h2>
+          <a href="/notes/">All notes →</a>
         </header>
-        <section>
-          <ul>
-            {
-              posts.slice(0, 3).map((post) => (
-                <li>
-                  <PostCard
-                    pubDate={post.data.pubDate}
-                    title={post.data.title}
-                    description={post.data.description}
-                    slug={post.slug}
-                  />
-                </li>
-              ))
-            }
-          </ul>
-        </section>
-      </section> -->
+        <ul class="notes-list">
+          {
+            posts.slice(0, 4).map((post) => (
+              <li>
+                <PostCard
+                  pubDate={post.data.pubDate}
+                  title={post.data.title}
+                  description={post.data.description}
+                  slug={post.slug}
+                  tags={post.data.tags}
+                  status={post.data.status}
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </section>
       <Footer />
       <style>
         .social-links {
@@ -98,8 +98,8 @@ const posts = (await getCollection("notes")).sort(
           text-decoration: none;
           color: rgb(var(--gray));
         }
-        
-        ul {
+
+        .now-list {
           display: flex;
           flex-wrap: wrap;
           gap: 1.5rem;
@@ -107,12 +107,35 @@ const posts = (await getCollection("notes")).sort(
           margin: 0;
           padding: 0;
         }
-        ul li {
+        .now-list li {
           width: 100%;
           text-decoration: none;
         }
+        .recent {
+          margin-top: 3rem;
+        }
+        .recent-header {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+        .recent-header a {
+          text-decoration: none;
+          font-family: "Roboto", sans-serif;
+          font-size: 0.9rem;
+          white-space: nowrap;
+        }
+        .notes-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          list-style-type: none;
+          margin: 1.5rem 0 0 0;
+          padding: 0;
+        }
         @media (max-width: 720px) {
-          ul {
+          .now-list {
             gap: 0.5em;
           }
         }

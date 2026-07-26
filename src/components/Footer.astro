@@ -4,6 +4,9 @@ const today = new Date();
 
 <footer>
   &copy; {today.getFullYear()} Mario Yordanov. All rights reserved.
+  <div class="footer-links">
+    <a href="/rss.xml">RSS</a>
+  </div>
   <div class="social-links">
     <a href="https://www.linkedin.com/in/mariovyordanov/" target="_blank">
       <span class="sr-only">Follow Mario on Linkedin</span>
@@ -48,6 +51,14 @@ const today = new Date();
     justify-content: center;
     gap: 1em;
     margin-top: 1em;
+  }
+  .footer-links {
+    margin-top: 0.5em;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.85rem;
+  }
+  .footer-links a {
+    color: rgb(var(--gray));
   }
   .social-links a {
     text-decoration: none;

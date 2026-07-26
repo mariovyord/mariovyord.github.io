@@ -1,0 +1,35 @@
+---
+interface Props {
+  status: "seedling" | "growing" | "evergreen";
+}
+
+const { status } = Astro.props;
+
+const meta = {
+  seedling: { label: "Seedling", icon: "🌱", hint: "A rough, early note" },
+  growing: { label: "Growing", icon: "🌿", hint: "Being developed" },
+  evergreen: { label: "Evergreen", icon: "🌳", hint: "Fairly settled" },
+} as const;
+
+const { label, icon, hint } = meta[status];
+---
+
+<span class:list={["status", status]} title={hint}>
+  <span aria-hidden="true">{icon}</span>{label}
+</span>
+
+<style>
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 0.35em 0.6em;
+    border-radius: 999px;
+    color: rgb(var(--gray));
+    border: 1px solid var(--border-color);
+    white-space: nowrap;
+  }
+</style>
