@@ -6,8 +6,6 @@ pubDate: "July 29 2026"
 
 Large Language Models are increasingly wrapped in layers of tooling. Understanding what each layer does — and what people mean when they use terms loosely — helps you make better decisions about what to use and why.
 
-Abstract illustration representing layered LLM tooling architecture
-
 ## The Core Idea: LLMs Are Just the Brain
 
 A raw LLM takes text in and returns text out. No memory, no tools, no autonomy. Everything else — the agents, the runtimes, the CLI tools — is infrastructure built around that core.
