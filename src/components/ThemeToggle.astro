@@ -70,12 +70,17 @@
     localStorage.setItem('theme', newTheme);
   }
 
-  // Initialize theme on page load
+  // Initialize theme on first load
   initTheme();
 
-  // Add click handler
-  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+  // Bind the toggle button (rebinds after each view transition swap)
+  function bindToggle() {
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', toggleTheme);
+  }
+  bindToggle();
+  document.addEventListener('astro:page-load', bindToggle);
 
-  // Re-initialize after navigation (for Astro view transitions)
+  // Re-apply saved theme after navigation
   document.addEventListener('astro:after-swap', initTheme);
 </script>

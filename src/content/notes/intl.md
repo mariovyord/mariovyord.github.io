@@ -2,6 +2,8 @@
 title: "JavaScript Intl for Localization"
 description: "Localizing dates, numbers, and lists."
 pubDate: "March 18 2026"
+tags: ["javascript", "frontend"]
+status: "evergreen"
 ---
 
 JavaScript's `Intl` namespace (ECMA-402) helps you localize your app, no extra libraries required. It formats numbers, dates, lists, and

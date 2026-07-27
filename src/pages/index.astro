@@ -21,6 +21,10 @@ const posts = (await getCollection("notes")).sort(
     <main>
       <section>
         <h1 class="mt-2! title">Hi, I'm Mario Yordanov 👋</h1>
+        <p class="typed-line" aria-hidden="true">
+          <span class="prompt">~ $</span>
+          <span id="typed-text"></span><span class="cursor"></span>
+        </p>
         <p>
           Full stack developer with a strong focus on frontend. My main strength is in creating user interfaces with <b>Angular</b> and end-to-end testing with <b>Playwright</b>.
           I also work with <b>Node.js</b>, <b>Java</b>, and <b>Spring Boot</b> on the backend, and occasionally use <b>React</b>, <b>Next.js</b>, <b>Astro</b>, and other frameworks.
@@ -59,33 +63,33 @@ const posts = (await getCollection("notes")).sort(
         </div>
       </section>
       <hr />
-          <ul>
-            <li>Now Playing: <a href="https://www.youtube.com/watch?v=ADYppf44cTs" target="_blank">Ninja Gaiden: Ragebound</a></li>
-            <li>Now Listening: <a href="https://youtu.be/Z-VfaG9ZN_U?si=lTYT6fp7DbCQyWmT" target="_blank">Programming / Coding / Hacking music vol.18</a></li>
-            <li>Now Reading: <a href="https://www.goodreads.com/book/show/228810178-this-way-up" target="_blank">This Way Up: When Maps Go Wrong [and Why It Matters] by Mark Cooper-Jones and Jay Foreman</a></li>
-          </ul>
-        </div>
-      <!-- <section>
-        <header>
-          <h3 class="title">Latest posts</h3>
+      <ul class="now-list">
+        <li>Now Playing: <a href="https://www.youtube.com/watch?v=ADYppf44cTs" target="_blank">Ninja Gaiden: Ragebound</a></li>
+        <li>Now Listening: <a href="https://youtu.be/Z-VfaG9ZN_U?si=lTYT6fp7DbCQyWmT" target="_blank">Programming / Coding / Hacking music vol.18</a></li>
+        <li>Now Reading: <a href="https://www.goodreads.com/book/show/228810178-this-way-up" target="_blank">This Way Up: When Maps Go Wrong [and Why It Matters] by Mark Cooper-Jones and Jay Foreman</a></li>
+      </ul>
+      <section class="recent">
+        <header class="recent-header">
+          <h2 class="title">Recent notes</h2>
+          <a href="/notes/">All notes →</a>
         </header>
-        <section>
-          <ul>
-            {
-              posts.slice(0, 3).map((post) => (
-                <li>
-                  <PostCard
-                    pubDate={post.data.pubDate}
-                    title={post.data.title}
-                    description={post.data.description}
-                    slug={post.slug}
-                  />
-                </li>
-              ))
-            }
-          </ul>
-        </section>
-      </section> -->
+        <ul class="notes-list">
+          {
+            posts.slice(0, 4).map((post) => (
+              <li>
+                <PostCard
+                  pubDate={post.data.pubDate}
+                  title={post.data.title}
+                  description={post.data.description}
+                  slug={post.slug}
+                  tags={post.data.tags}
+                  status={post.data.status}
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </section>
       <Footer />
       <style>
         .social-links {
@@ -98,8 +102,40 @@ const posts = (await getCollection("notes")).sort(
           text-decoration: none;
           color: rgb(var(--gray));
         }
-        
-        ul {
+
+        .typed-line {
+          font-family: "Roboto Mono", ui-monospace, "SF Mono", Menlo, monospace;
+          font-size: 1rem;
+          color: var(--accent);
+          margin: 0.25em 0 1em;
+          min-height: 1.6em;
+        }
+        .typed-line .prompt {
+          color: rgb(var(--gray));
+          margin-right: 0.5em;
+          user-select: none;
+        }
+        .cursor {
+          display: inline-block;
+          width: 0.6ch;
+          height: 1.1em;
+          vertical-align: text-bottom;
+          background: var(--accent);
+          margin-left: 2px;
+          animation: blink 1s steps(1) infinite;
+        }
+        @keyframes blink {
+          50% {
+            opacity: 0;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .cursor {
+            animation: none;
+          }
+        }
+
+        .now-list {
           display: flex;
           flex-wrap: wrap;
           gap: 1.5rem;
@@ -107,16 +143,93 @@ const posts = (await getCollection("notes")).sort(
           margin: 0;
           padding: 0;
         }
-        ul li {
+        .now-list li {
           width: 100%;
           text-decoration: none;
         }
+        .recent {
+          margin-top: 3rem;
+        }
+        .recent-header {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+        .recent-header a {
+          text-decoration: none;
+          font-family: "Roboto", sans-serif;
+          font-size: 0.9rem;
+          white-space: nowrap;
+        }
+        .notes-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          list-style-type: none;
+          margin: 1.5rem 0 0 0;
+          padding: 0;
+        }
         @media (max-width: 720px) {
-          ul {
+          .now-list {
             gap: 0.5em;
           }
         }
       </style>
     </main>
+
+    <script>
+      const PHRASES = [
+        "full stack developer",
+        "angular & typescript",
+        "playwright end-to-end tests",
+        "node, java & spring boot",
+        "occasional react / astro",
+        "writing notes to think",
+      ];
+
+      function startTyping() {
+        const el = document.getElementById("typed-text");
+        if (!el || el.dataset.typing) return;
+        el.dataset.typing = "true";
+        const node = el;
+
+        const reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        if (reduce) {
+          node.textContent = PHRASES[0];
+          return;
+        }
+
+        let phrase = 0;
+        let char = 0;
+        let deleting = false;
+
+        function tick() {
+          const current = PHRASES[phrase];
+          node.textContent = current.slice(0, char);
+
+          if (!deleting && char < current.length) {
+            char++;
+            setTimeout(tick, 55 + Math.random() * 45);
+          } else if (!deleting && char === current.length) {
+            deleting = true;
+            setTimeout(tick, 1400);
+          } else if (deleting && char > 0) {
+            char--;
+            setTimeout(tick, 30);
+          } else {
+            deleting = false;
+            phrase = (phrase + 1) % PHRASES.length;
+            setTimeout(tick, 300);
+          }
+        }
+        tick();
+      }
+
+      startTyping();
+      document.addEventListener("astro:page-load", startTyping);
+    </script>
   </body>
 </html>

@@ -2,6 +2,8 @@
 title: "Dynamic Import in JavaScript"
 description: "Using dynamic import() for lazy-loading in JavaScript."
 pubDate: "January 13 2026"
+tags: ["javascript", "frontend"]
+status: "evergreen"
 ---
 
 Modern JavaScript applications can greatly benefit from dynamic `import()`, a feature that allows you to load modules only when needed. While static import works well for core dependencies, dynamic `import()` is perfect for improving performance and reducing the initial load time of large apps.

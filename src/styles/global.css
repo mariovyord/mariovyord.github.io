@@ -1,8 +1,8 @@
 :root {
   --text-color: #fff;
   --bg-color: #0f172a;
-  --accent: #2337ff;
-  --accent-dark: #000d8a;
+  --accent: #0f766e;
+  --accent-dark: #115e59;
   --black: 15, 18, 25;
   --gray: 96, 115, 159;
   --gray-light: 229, 233, 240;
@@ -21,6 +21,7 @@
 }
 
 [data-theme="dark"] {
+  --accent: #2dd4bf;
   --bg-primary: #0f172a;
   --bg-secondary: rgba(34, 41, 57, 0.5);
   --text-primary: rgb(229, 233, 240);
