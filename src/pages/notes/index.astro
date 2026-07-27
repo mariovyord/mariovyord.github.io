@@ -17,7 +17,6 @@ const description =
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
-    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
     <style>
       ul {
         display: flex;
@@ -34,18 +33,6 @@ const description =
       .title h1 {
         margin: 0 0 0.5em 0;
       }
-      .search {
-        margin-bottom: 2rem;
-      }
-      /* Pagefind UI theming */
-      #search {
-        --pagefind-ui-primary: var(--accent);
-        --pagefind-ui-text: var(--text-primary);
-        --pagefind-ui-background: var(--bg-primary);
-        --pagefind-ui-border: var(--border-color);
-        --pagefind-ui-font: "Roboto", sans-serif;
-        --pagefind-ui-border-radius: 8px;
-      }
     </style>
   </head>
   <body>
@@ -56,9 +43,6 @@ const description =
           <h1>Notes on...</h1>
           <p><i>Quick thoughts on web development, mostly for myself</i></p>
           <hr />
-        </div>
-        <div class="search">
-          <div id="search"></div>
         </div>
         <ul>
           {
@@ -79,28 +63,5 @@ const description =
       </section>
     </main>
     <Footer />
-    <script>
-      // Pagefind bundle is generated into /pagefind at build time and only
-      // exists on the built/preview site (not in bare `astro dev`).
-      window.addEventListener("DOMContentLoaded", () => {
-        const path = "/pagefind/pagefind-ui.js";
-        import(/* @vite-ignore */ path)
-          .then(({ PagefindUI }) => {
-            new PagefindUI({
-              element: "#search",
-              showSubResults: true,
-              showImages: false,
-              resetStyles: false,
-              translations: { placeholder: "Search notes..." },
-            });
-          })
-          .catch(() => {
-            const el = document.getElementById("search");
-            if (el)
-              el.innerHTML =
-                '<p style="color: rgb(var(--gray)); font-size: 0.9rem;">Search is available on the built site.</p>';
-          });
-      });
-    </script>
   </body>
 </html>

@@ -146,9 +146,7 @@ const {
             <hr />
           </div>
           {heroImage && <img class="hero" src={heroImage} alt="" />}
-          <div data-pagefind-body>
-            <slot />
-          </div>
+          <slot />
           <nav class="post-nav">
             {
               prev && (

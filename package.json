@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build && pagefind --site dist",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -18,7 +18,6 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.6.1",
-    "pagefind": "^1.5.2"
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   }
 }
