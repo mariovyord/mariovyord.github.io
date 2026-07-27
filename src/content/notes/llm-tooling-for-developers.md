@@ -1,5 +1,5 @@
 ---
-title: "Notes on... LLM Tooling for Developers"
+title: "LLM Tooling for Developers"
 description: "How Agents, Runtimes, and Coding Tools fit together — and why the terminology is messier than it looks."
 pubDate: "July 29 2026"
 ---
