@@ -8,6 +8,13 @@ import { getCollection } from "astro:content";
 const posts = (await getCollection("notes")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const counts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags ?? []) {
+    counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...counts.entries()].sort((a, b) => b[1] - a[1]);
 const title = "Notes — Mario Yordanov";
 const description =
   "Notes on web development, architecture, and whatever I'm thinking through.";
@@ -33,6 +40,34 @@ const description =
       .title h1 {
         margin: 0 0 0.5em 0;
       }
+      .cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 2rem;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        font-family: "Roboto", sans-serif;
+        font-size: 0.95rem;
+        padding: 0.5em 0.9em;
+        border: 1px solid var(--border-color);
+        border-radius: 999px;
+        text-decoration: none;
+        color: var(--text-primary);
+        background: var(--bg-secondary);
+        transition: 0.2s ease;
+      }
+      .tag:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .count {
+        color: rgb(var(--gray));
+        font-size: 0.8rem;
+      }
     </style>
   </head>
   <body>
@@ -44,6 +79,17 @@ const description =
           <p><i>Quick thoughts on web development, mostly for myself</i></p>
           <hr />
         </div>
+        {
+          tags.length > 0 && (
+            <div class="cloud">
+              {tags.map(([tag, count]) => (
+                <a href={`/tags/${tag}/`} class="tag">
+                  #{tag} <span class="count">{count}</span>
+                </a>
+              ))}
+            </div>
+          )
+        }
         <ul>
           {
             posts.map((post) => (
