@@ -10,6 +10,8 @@ Large Language Models are increasingly wrapped in layers of tooling. Understandi
 
 A raw LLM takes text in and returns text out. No memory, no tools, no autonomy. Everything else — the agents, the runtimes, the CLI tools — is infrastructure built around that core.
 
+Under the hood, the model is a neural network trained on huge amounts of text to predict the next token given everything before it. It generates one token at a time, feeding each output back in as input, which is why a single call is stateless: it only "knows" what fits in the prompt you give it.
+
 That distinction matters because people often say "the AI did X" when really a surrounding tool did X and the LLM just reasoned about it.
 
 ## Inference Runtimes: Running the Model
@@ -17,6 +19,8 @@ That distinction matters because people often say "the AI did X" when really a s
 Before you can use an LLM, something has to load and run it efficiently on hardware.
 
 That is what inference runtimes do.
+
+They load the model's weights into memory (often on a GPU) and turn the raw prediction step into a usable service — handling tokenization, batching many requests together, and managing the KV cache so previously computed tokens don't have to be recomputed. Many also apply quantization, shrinking the weights to lower precision so large models can run on more modest hardware.
 
 Examples:
 
@@ -29,6 +33,8 @@ They are the engine. Everything else sits on top.
 ## Orchestration Frameworks: Chaining It Together
 
 Orchestration frameworks let you build pipelines — connecting prompts, memory, retrievers, and multiple models into a coherent application.
+
+They work by wrapping each piece — a prompt template, a model call, a retriever, a parser — in a common interface, then letting you compose those pieces into a directed flow where one step's output becomes the next step's input. This is also where patterns like retrieval-augmented generation (RAG) live: fetch relevant context first, then inject it into the prompt before calling the model.
 
 Examples:
 
@@ -44,6 +50,8 @@ An agent is an LLM given tools and a loop.
 
 Instead of answering once and stopping, it takes an action, observes the result, and decides what to do next — repeating until the task is complete.
 
+Mechanically, this works by describing the available tools to the model and asking it to emit a structured request — a function name and arguments — instead of plain prose. The harness runs that tool, feeds the result back into the context, and calls the model again, looping until the model signals it is finished.
+
 Those tools might be:
 
 - reading or writing files
@@ -58,6 +66,8 @@ The key concept is the loop. Without it, it is just a prompt. With it, the model
 Coding agents are agents with access to your codebase, terminal, and git history.
 
 They are often called "harnesses" informally — meaning they harness the LLM and give it the context and tools it needs to work with code.
+
+What makes them "coding" agents is the specialized toolset and context management around the loop: they index or map the repository to find relevant files, expose tools for reading, editing, and running code, and feed compiler errors or test output back into the model so it can correct itself over multiple iterations.
 
 Examples:
 
