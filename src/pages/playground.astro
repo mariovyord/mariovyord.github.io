@@ -22,39 +22,56 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
           <hr />
         </div>
 
-        <h2 class="section-title">Super Mario Clone</h2>
-        <div class="game-wrapper">
-          <iframe
-            class="game-frame"
-            src="https://mariovyord.github.io/super-mario-clone/"
-            title="Super Mario clone game"
-            loading="lazy"
-            allow="fullscreen; gamepad; autoplay"
-          ></iframe>
+        <div class="game-section">
+          <span class="game-label">Super Mario Clone</span>
+          <div class="game-wrapper">
+            <iframe
+              class="game-frame"
+              src="https://mariovyord.github.io/super-mario-clone/"
+              title="Super Mario clone game"
+              loading="lazy"
+              allow="fullscreen; gamepad; autoplay"
+            ></iframe>
+          </div>
+          <p class="game-note">
+            Can't see the game? <a
+              href="https://mariovyord.github.io/super-mario-clone/"
+              target="_blank"
+              rel="noopener">Open it in a new tab</a
+            >.
+          </p>
         </div>
-        <p class="game-note">
-          Can't see the game? <a
-            href="https://mariovyord.github.io/super-mario-clone/"
-            target="_blank"
-            rel="noopener">Open it in a new tab</a
-          >.
-        </p>
 
         <hr />
 
         <h2 class="section-title">More projects</h2>
         <div class="projects-grid">
           <a href="https://mariovyord.github.io/tiny-terminal-css/index.html" target="_blank" rel="noopener" class="project-card">
-            <h3>Tiny Terminal CSS</h3>
-            <p>A lightweight, retro-inspired CSS framework that brings classic terminal and "movie hacker" vibes to web projects.</p>
+            <div class="preview">
+              <iframe src="https://mariovyord.github.io/tiny-terminal-css/index.html" loading="lazy" title="Tiny Terminal CSS preview" tabindex="-1"></iframe>
+            </div>
+            <div class="card-body">
+              <h3>Tiny Terminal CSS</h3>
+              <p>A lightweight, retro-inspired CSS framework that brings classic terminal and "movie hacker" vibes to web projects.</p>
+            </div>
           </a>
           <a href="https://mariovyord.github.io/cosmic-invaders/index.html" target="_blank" rel="noopener" class="project-card">
-            <h3>Cosmic Invaders</h3>
-            <p>A Space Invaders inspired game made with vanilla JavaScript and the Canvas API.</p>
+            <div class="preview">
+              <iframe src="https://mariovyord.github.io/cosmic-invaders/index.html" loading="lazy" title="Cosmic Invaders preview" tabindex="-1"></iframe>
+            </div>
+            <div class="card-body">
+              <h3>Cosmic Invaders</h3>
+              <p>A Space Invaders inspired game made with vanilla JavaScript and the Canvas API.</p>
+            </div>
           </a>
           <a href="https://tic-tac-toe-online-11df9.web.app/signin" target="_blank" rel="noopener" class="project-card">
-            <h3>Tic Tac Toe Online</h3>
-            <p>Online game where you can face off against AI or other players.</p>
+            <div class="preview">
+              <iframe src="https://tic-tac-toe-online-11df9.web.app/signin" loading="lazy" title="Tic Tac Toe Online preview" tabindex="-1"></iframe>
+            </div>
+            <div class="card-body">
+              <h3>Tic Tac Toe Online</h3>
+              <p>Online game where you can face off against AI or other players.</p>
+            </div>
           </a>
         </div>
       </section>
@@ -68,9 +85,22 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
       .title h1 {
         margin: 0 0 0.5em 0;
       }
-      .section-title {
-        font-size: 1.3rem;
-        margin: 1.5em 0 1em;
+      .game-section {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin: 1.5em 0;
+      }
+      .game-label {
+        display: block;
+        font-family: "Roboto", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgb(var(--gray));
+        margin-bottom: 1rem;
       }
       .game-wrapper {
         width: 100%;
@@ -89,7 +119,7 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
       .game-note {
         margin-top: 1em;
         text-align: center;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: rgb(var(--gray));
       }
       .projects-grid {
@@ -100,10 +130,10 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
       }
       .project-card {
         display: block;
-        padding: 1.5rem;
         border: 1px solid var(--border-color);
         border-radius: 0.75rem;
         text-decoration: none;
+        overflow: hidden;
         transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
       }
       .project-card:hover {
@@ -111,14 +141,30 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
         box-shadow: 0 8px 24px rgba(var(--gray), 20%);
         transform: translateY(-2px);
       }
-      .project-card h3 {
-        margin: 0 0 0.5em;
-        font-size: 1.15rem;
+      .preview {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .preview iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        pointer-events: none;
+      }
+      .card-body {
+        padding: 1rem 1.25rem;
+      }
+      .card-body h3 {
+        margin: 0 0 0.35em;
+        font-size: 1.05rem;
         color: var(--text-primary);
       }
-      .project-card p {
+      .card-body p {
         margin: 0;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: rgb(var(--gray));
       }
       @media (max-width: 720px) {
