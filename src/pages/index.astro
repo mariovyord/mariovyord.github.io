@@ -95,11 +95,10 @@ const posts = (await getCollection("notes")).sort(
       <style>
         .hero-section {
           position: relative;
-          overflow: hidden;
         }
         .spotlight {
           position: absolute;
-          inset: -200px;
+          inset: -100px;
           pointer-events: none;
           background: radial-gradient(600px circle at var(--sx, 50%) var(--sy, 50%), rgba(45, 212, 191, 0.06), transparent 60%);
           z-index: 0;
