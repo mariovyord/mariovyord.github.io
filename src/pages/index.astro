@@ -21,6 +21,8 @@ const posts = (await getCollection("notes")).sort(
     <Header />
     <main>
       <section class="hero-section">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-content">
         <h1 class="mt-2! title">Hi, I'm Mario Yordanov 👋</h1>
         <p class="typed-line" aria-hidden="true">
           <span class="prompt">~ $</span>
@@ -62,6 +64,7 @@ const posts = (await getCollection("notes")).sort(
             >
           </a>
         </div>
+        </div>
       </section>
       <hr />
       <ul class="now-list">
@@ -101,7 +104,23 @@ const posts = (await getCollection("notes")).sort(
           z-index: 0;
         }
         @media (prefers-reduced-motion: reduce) {
-          .spotlight {
+        .hero-section {
+          position: relative;
+          min-height: 60vh;
+        }
+        #hero-canvas {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+          pointer-events: none;
+        }
+        .hero-content {
+          position: relative;
+          z-index: 1;
+        }
+        .spotlight {
             display: none;
           }
         }
@@ -260,6 +279,123 @@ const posts = (await getCollection("notes")).sort(
       }
       initSpotlight();
       document.addEventListener("astro:page-load", initSpotlight);
+
+      function init3DScene() {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce) return;
+
+        const canvas = document.getElementById("hero-canvas") as HTMLCanvasElement | null;
+        if (!canvas || canvas.dataset.scene) return;
+        canvas.dataset.scene = "true";
+
+        const ctx = canvas.getContext("2d")!;
+        let mX = 0.5, mY = 0.5;
+        let animId: number;
+
+        const shapes = [
+          { type: "circle", size: 60, x: 0.2, y: 0.3, z: 0, rotX: 0, rotY: 0, speed: 0.3, color: "rgba(45,212,191," },
+          { type: "hex", size: 45, x: 0.8, y: 0.25, z: 1, rotX: 0, rotY: 0, speed: 0.2, color: "rgba(15,118,110," },
+          { type: "triangle", size: 50, x: 0.7, y: 0.7, z: 0.5, rotX: 0, rotY: 0, speed: 0.35, color: "rgba(45,212,191," },
+          { type: "circle", size: 35, x: 0.15, y: 0.65, z: 0.8, rotX: 0, rotY: 0, speed: 0.25, color: "rgba(15,118,110," },
+          { type: "hex", size: 30, x: 0.5, y: 0.8, z: 0.3, rotX: 0, rotY: 0, speed: 0.4, color: "rgba(45,212,191," },
+          { type: "triangle", size: 40, x: 0.4, y: 0.15, z: 0.2, rotX: 0, rotY: 0, speed: 0.3, color: "rgba(15,118,110," },
+        ];
+
+        function resize() {
+          const r = canvas!.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          canvas!.width = r.width * dpr;
+          canvas!.height = r.height * dpr;
+          ctx!.scale(dpr, dpr);
+        }
+
+        function drawShape(s: typeof shapes[0]) {
+          const cx = s.x * canvas!.width / (window.devicePixelRatio || 1);
+          const cy = s.y * canvas!.height / (window.devicePixelRatio || 1);
+          const depth = 1 + s.z * 0.5;
+          const size = s.size * depth;
+
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(s.rotX + s.rotY);
+
+          const alpha = Math.min(1, 0.2 + s.z * 0.3);
+          ctx.fillStyle = s.color + alpha + ")";
+          ctx.strokeStyle = s.color + (alpha + 0.15) + ")";
+          ctx.lineWidth = 1.5;
+
+          if (s.type === "circle") {
+            ctx.beginPath();
+            ctx.arc(0, 0, size * 0.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+          } else if (s.type === "hex") {
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+              const angle = (Math.PI / 3) * i - Math.PI / 6;
+              const px = Math.cos(angle) * size * 0.5;
+              const py = Math.sin(angle) * size * 0.5;
+              i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+          } else if (s.type === "triangle") {
+            ctx.beginPath();
+            for (let i = 0; i < 3; i++) {
+              const angle = (Math.PI * 2 / 3) * i - Math.PI / 2;
+              const px = Math.cos(angle) * size * 0.5;
+              const py = Math.sin(angle) * size * 0.5;
+              i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+          }
+
+          ctx.restore();
+        }
+
+        function animate(time: number) {
+          const w = canvas!.width / (window.devicePixelRatio || 1);
+          const h = canvas!.height / (window.devicePixelRatio || 1);
+          ctx!.clearRect(0, 0, w, h);
+
+          const offsetX = (mX - 0.5) * 20;
+          const offsetY = (mY - 0.5) * 20;
+
+          ctx!.save();
+          ctx!.translate(offsetX, offsetY);
+
+          for (const s of shapes) {
+            s.rotX += s.speed * 0.01;
+            s.rotY += s.speed * 0.008;
+            drawShape(s);
+          }
+
+          ctx!.restore();
+          animId = requestAnimationFrame(animate);
+        }
+
+        resize();
+        document.addEventListener("pointermove", (e) => {
+          mX = e.clientX / window.innerWidth;
+          mY = e.clientY / window.innerHeight;
+        });
+
+        const ro = new ResizeObserver(resize);
+        ro.observe(canvas);
+
+        animId = requestAnimationFrame(animate);
+
+        // Cleanup on navigation
+        document.addEventListener("astro:before-swap", () => {
+          cancelAnimationFrame(animId);
+          ro.disconnect();
+        }, { once: true });
+      }
+      init3DScene();
+      document.addEventListener("astro:page-load", init3DScene);
     </script>
   </body>
 </html>
