@@ -170,7 +170,6 @@ const posts = (await getCollection("notes")).sort(
           margin: 1.5rem 0 0 0;
           padding: 0;
         }
-        @media (max-width: 720px) {
         .tech-tags b {
           display: inline-block;
           animation: float 3s ease-in-out infinite;
@@ -185,7 +184,8 @@ const posts = (await getCollection("notes")).sort(
             animation: none;
           }
         }
-        .now-list {
+        @media (max-width: 720px) {
+          .now-list {
             gap: 0.5em;
           }
         }
