@@ -25,7 +25,7 @@ const posts = (await getCollection("notes")).sort(
           <span class="prompt">~ $</span>
           <span id="typed-text"></span><span class="cursor"></span>
         </p>
-        <p>
+        <p class="tech-tags">
           Full stack developer with a strong focus on frontend. My main strength is in creating user interfaces with <b>Angular</b> and end-to-end testing with <b>Playwright</b>.
           I also work with <b>Node.js</b>, <b>Java</b>, and <b>Spring Boot</b> on the backend, and occasionally use <b>React</b>, <b>Next.js</b>, <b>Astro</b>, and other frameworks.
         </p>
@@ -171,7 +171,21 @@ const posts = (await getCollection("notes")).sort(
           padding: 0;
         }
         @media (max-width: 720px) {
-          .now-list {
+        .tech-tags b {
+          display: inline-block;
+          animation: float 3s ease-in-out infinite;
+          animation-delay: var(--delay, 0s);
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .tech-tags b {
+            animation: none;
+          }
+        }
+        .now-list {
             gap: 0.5em;
           }
         }
@@ -230,6 +244,16 @@ const posts = (await getCollection("notes")).sort(
 
       startTyping();
       document.addEventListener("astro:page-load", startTyping);
+
+      function initFloatingTags() {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce) return;
+        document.querySelectorAll(".tech-tags b").forEach((el, i) => {
+          (el as HTMLElement).style.setProperty("--delay", `${i * 0.35}s`);
+        });
+      }
+      initFloatingTags();
+      document.addEventListener("astro:page-load", initFloatingTags);
     </script>
   </body>
 </html>
