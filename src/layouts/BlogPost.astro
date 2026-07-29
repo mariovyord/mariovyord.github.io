@@ -89,6 +89,17 @@ const {
       .back-link:hover {
         color: var(--accent);
       }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0%;
+        background: var(--accent);
+        z-index: 100;
+        transition: width 0.1s linear;
+        will-change: width;
+      }
       .post-nav {
         display: flex;
         justify-content: space-between;
@@ -115,6 +126,7 @@ const {
   </head>
 
   <body>
+    <div class="progress-bar" role="progressbar" aria-label="Reading progress"></div>
     <Header />
     <main>
       <article data-fade>
@@ -173,6 +185,25 @@ const {
 </html>
 
 <script>
+  // Update reading progress bar on scroll.
+  function initProgressBar() {
+    const bar = document.querySelector<HTMLDivElement>(".progress-bar");
+    if (!bar) return;
+
+    function update() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+      bar!.style.width = `${progress * 100}%`;
+    }
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce) {
+      window.addEventListener("scroll", update, { passive: true });
+    }
+    update();
+  }
+
   // Add a copy button to every code block (re-runs after view transitions).
   function addCopyButtons() {
     document.querySelectorAll("article pre").forEach((pre) => {
@@ -220,7 +251,11 @@ const {
   }
 
   addCopyButtons();
-  document.addEventListener("astro:page-load", addCopyButtons);
+  initProgressBar();
+  document.addEventListener("astro:page-load", () => {
+    addCopyButtons();
+    initProgressBar();
+  });
 </script>
 
 <style is:global>
