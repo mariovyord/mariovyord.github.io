@@ -17,10 +17,10 @@ const posts = (await getCollection("notes")).sort(
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
+    <div class="spotlight" aria-hidden="true"></div>
     <Header />
     <main>
       <section class="hero-section">
-        <div class="spotlight" aria-hidden="true"></div>
         <h1 class="mt-2! title">Hi, I'm Mario Yordanov 👋</h1>
         <p class="typed-line" aria-hidden="true">
           <span class="prompt">~ $</span>
@@ -93,24 +93,17 @@ const posts = (await getCollection("notes")).sort(
       </section>
       <Footer />
       <style>
-        .hero-section {
-          position: relative;
-        }
         .spotlight {
-          position: absolute;
-          inset: -100px;
+          position: fixed;
+          inset: 0;
           pointer-events: none;
-          background: radial-gradient(600px circle at var(--sx, 50%) var(--sy, 50%), rgba(45, 212, 191, 0.06), transparent 60%);
+          background: radial-gradient(800px circle at var(--sx, 50%) var(--sy, 50%), rgba(45, 212, 191, 0.05), transparent 60%);
           z-index: 0;
         }
         @media (prefers-reduced-motion: reduce) {
           .spotlight {
             display: none;
           }
-        }
-        .hero-section > *:not(.spotlight) {
-          position: relative;
-          z-index: 1;
         }
         .social-links {
           display: flex;
@@ -254,16 +247,15 @@ const posts = (await getCollection("notes")).sort(
       function initSpotlight() {
         const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (reduce) return;
-        const section = document.querySelector<HTMLElement>(".hero-section");
-        if (!section || section.dataset.spotlight) return;
-        section.dataset.spotlight = "true";
+        const spot = document.querySelector<HTMLElement>(".spotlight");
+        if (!spot || spot.dataset.spotlight) return;
+        spot.dataset.spotlight = "true";
 
-        section.addEventListener("pointermove", (e: PointerEvent) => {
-          const r = section.getBoundingClientRect();
-          const x = ((e.clientX - r.left) / r.width) * 100;
-          const y = ((e.clientY - r.top) / r.height) * 100;
-          section.style.setProperty("--sx", `${x}%`);
-          section.style.setProperty("--sy", `${y}%`);
+        document.addEventListener("pointermove", (e: PointerEvent) => {
+          const x = (e.clientX / window.innerWidth) * 100;
+          const y = (e.clientY / window.innerHeight) * 100;
+          spot.style.setProperty("--sx", `${x}%`);
+          spot.style.setProperty("--sy", `${y}%`);
         });
       }
       initSpotlight();
