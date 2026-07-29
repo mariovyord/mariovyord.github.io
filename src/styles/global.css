@@ -185,7 +185,26 @@ hr {
   will-change: transform;
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-magnetic] {
+[data-reveal] {
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+[data-reveal="up"] { transform: translateY(40px); }
+[data-reveal="left"] { transform: translateX(-60px); }
+[data-reveal="right"] { transform: translateX(60px); }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+[data-magnetic] {
     transition: none;
   }
 }

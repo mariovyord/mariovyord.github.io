@@ -92,8 +92,8 @@ const description =
         }
         <ul>
           {
-            posts.map((post) => (
-              <li>
+            posts.map((post, i) => (
+              <li data-reveal="up" style={`transition-delay: ${i * 0.08}s`}>
                 <PostCard
                   pubDate={post.data.pubDate}
                   title={post.data.title}
