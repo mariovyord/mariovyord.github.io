@@ -98,3 +98,31 @@ const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
 
 <!-- Animated page navigation -->
 <ViewTransitions />
+
+<script>
+  function initMagnetic() {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((el) => {
+      if (el.dataset.magneticBound) return;
+      el.dataset.magneticBound = "true";
+
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) * 0.3;
+        const dy = (e.clientY - cy) * 0.3;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+
+      el.addEventListener("pointerleave", () => {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  initMagnetic();
+  document.addEventListener("astro:page-load", initMagnetic);
+</script>

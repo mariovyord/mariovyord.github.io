@@ -31,8 +31,7 @@ Personal portfolio + digital garden built with Astro 4 (no React/Vue/Svelte). De
 
 Checklist at `cool-effects-checklist.md`. Current progress:
 - [x] Reading progress bar
-- [x] Background grain texture
-- [ ] Magnetic hover on social links
+- [x] Magnetic hover on social links
 - [ ] Animated floating tech-stack tags
 - [ ] Spotlight follower
 - [ ] Interactive 3D hero scene
