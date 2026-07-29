@@ -19,7 +19,8 @@ const posts = (await getCollection("notes")).sort(
   <body>
     <Header />
     <main>
-      <section>
+      <section class="hero-section">
+        <div class="spotlight" aria-hidden="true"></div>
         <h1 class="mt-2! title">Hi, I'm Mario Yordanov 👋</h1>
         <p class="typed-line" aria-hidden="true">
           <span class="prompt">~ $</span>
@@ -92,6 +93,26 @@ const posts = (await getCollection("notes")).sort(
       </section>
       <Footer />
       <style>
+        .hero-section {
+          position: relative;
+          overflow: hidden;
+        }
+        .spotlight {
+          position: absolute;
+          inset: -200px;
+          pointer-events: none;
+          background: radial-gradient(600px circle at var(--sx, 50%) var(--sy, 50%), rgba(45, 212, 191, 0.06), transparent 60%);
+          z-index: 0;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .spotlight {
+            display: none;
+          }
+        }
+        .hero-section > *:not(.spotlight) {
+          position: relative;
+          z-index: 1;
+        }
         .social-links {
           display: flex;
           justify-content: start;
@@ -230,6 +251,24 @@ const posts = (await getCollection("notes")).sort(
 
       startTyping();
       document.addEventListener("astro:page-load", startTyping);
+
+      function initSpotlight() {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce) return;
+        const section = document.querySelector<HTMLElement>(".hero-section");
+        if (!section || section.dataset.spotlight) return;
+        section.dataset.spotlight = "true";
+
+        section.addEventListener("pointermove", (e: PointerEvent) => {
+          const r = section.getBoundingClientRect();
+          const x = ((e.clientX - r.left) / r.width) * 100;
+          const y = ((e.clientY - r.top) / r.height) * 100;
+          section.style.setProperty("--sx", `${x}%`);
+          section.style.setProperty("--sy", `${y}%`);
+        });
+      }
+      initSpotlight();
+      document.addEventListener("astro:page-load", initSpotlight);
     </script>
   </body>
 </html>
