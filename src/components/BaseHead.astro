@@ -98,3 +98,36 @@ const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
 
 <!-- Animated page navigation -->
 <ViewTransitions />
+
+<script>
+  function initFadeIn() {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    const els = document.querySelectorAll("[data-fade]");
+    if (els.length === 0) return;
+
+    for (const el of els) {
+      if (!el.classList.contains("fade-in-visible")) {
+        el.classList.add("fade-in");
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fade-in-visible");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    els.forEach((el) => observer.observe(el));
+  }
+
+  initFadeIn();
+  document.addEventListener("astro:page-load", initFadeIn);
+</script>

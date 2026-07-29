@@ -19,7 +19,7 @@ const posts = (await getCollection("notes")).sort(
   <body>
     <Header />
     <main>
-      <section>
+      <section data-fade>
         <h1 class="mt-2! title">Hi, I'm Mario Yordanov 👋</h1>
         <p class="typed-line" aria-hidden="true">
           <span class="prompt">~ $</span>
@@ -63,12 +63,12 @@ const posts = (await getCollection("notes")).sort(
         </div>
       </section>
       <hr />
-      <ul class="now-list">
+      <ul class="now-list" data-fade>
         <li>Now Playing: <a href="https://youtu.be/BI9fgQY0d5I?si=PZkv0tGSW7dsr1tu" target="_blank">Rainbow Six Siege</a></li>
         <li>Now Listening: <a href="https://youtu.be/dr6IkPSrvbw?si=NgpaBAoJA-ehxfnL" target="_blank">Daliborovo Granje - Hainin</a></li>
         <li>Now Reading: <a href="https://en.wikipedia.org/wiki/Children_of_Ruin" target="_blank">Children of Ruin by Adrian Tchaikovsky</a></li>
       </ul>
-      <section class="recent">
+      <section class="recent" data-fade>
         <header class="recent-header">
           <h2 class="title">Recent notes</h2>
           <a href="/notes/">All notes →</a>
@@ -76,7 +76,7 @@ const posts = (await getCollection("notes")).sort(
         <ul class="notes-list">
           {
             posts.slice(0, 4).map((post) => (
-              <li>
+              <li data-fade>
                 <PostCard
                   pubDate={post.data.pubDate}
                   title={post.data.title}

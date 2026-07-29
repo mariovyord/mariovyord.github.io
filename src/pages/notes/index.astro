@@ -74,14 +74,14 @@ const description =
     <Header />
     <main>
       <section>
-        <div class="title">
+        <div class="title" data-fade>
           <h1>Notes on...</h1>
           <p><i>Quick thoughts on web development, mostly for myself</i></p>
           <hr />
         </div>
         {
           tags.length > 0 && (
-            <div class="cloud">
+            <div class="cloud" data-fade>
               {tags.map(([tag, count]) => (
                 <a href={`/tags/${tag}/`} class="tag">
                   #{tag} <span class="count">{count}</span>
@@ -93,7 +93,7 @@ const description =
         <ul>
           {
             posts.map((post) => (
-              <li>
+              <li data-fade>
                 <PostCard
                   pubDate={post.data.pubDate}
                   title={post.data.title}
