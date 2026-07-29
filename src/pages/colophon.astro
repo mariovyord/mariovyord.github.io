@@ -1,0 +1,85 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const title = "Colophon — Mario Yordanov";
+const description = "How this site is built and what powers it.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <style>
+      .prose {
+        max-width: 720px;
+        margin: auto;
+        padding: 1em;
+      }
+      .prose h1 {
+        margin: 0 0 0.5em;
+      }
+      .prose ul {
+        padding: 0;
+        list-style: none;
+      }
+      .prose li {
+        padding: 0.75em 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .prose li:last-child {
+        border-bottom: none;
+      }
+      .prose strong {
+        display: block;
+        color: var(--text-primary);
+      }
+      .prose p {
+        color: rgb(var(--gray));
+        margin: 0.25em 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <article class="prose">
+        <h1>Colophon</h1>
+        <p><i>How this site is made.</i></p>
+        <hr />
+        <ul>
+          <li>
+            <strong>Generator</strong>
+            <p><a href="https://astro.build">Astro</a> 4 — static site generator. No React, Vue, or Svelte.</p>
+          </li>
+          <li>
+            <strong>Hosting</strong>
+            <p><a href="https://pages.github.com">GitHub Pages</a>, deployed via GitHub Actions on push to <code>main</code>.</p>
+          </li>
+          <li>
+            <strong>Typography</strong>
+            <p>Headings: <a href="https://fonts.google.com/specimen/Roboto">Roboto</a>. Body: <a href="https://fonts.google.com/specimen/Libre+Baskerville">Libre Baskerville</a>. Both self-hosted.</p>
+          </li>
+          <li>
+            <strong>Styling</strong>
+            <p>Plain CSS — no frameworks, no preprocessors. Scoped component styles + one global stylesheet.</p>
+          </li>
+          <li>
+            <strong>Content</strong>
+            <p>Markdown notes in Astro Content Collections, validated with Zod schemas.</p>
+          </li>
+          <li>
+            <strong>Interactive effects</strong>
+            <p>Reading progress bar, magnetic social links, spotlight follower, scrollytelling reveals, typewriter animation, 3D tilt cards.</p>
+          </li>
+          <li>
+            <strong>Source</strong>
+            <p><a href="https://github.com/mariovyord/mariovyord.github.io">github.com/mariovyord/mariovyord.github.io</a></p>
+          </li>
+        </ul>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
