@@ -18,9 +18,11 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
       <section>
         <div class="title">
           <h1>Playground</h1>
-          <p><i>A little Super Mario clone I built. Have fun!</i></p>
+          <p><i>Things I've built for fun.</i></p>
           <hr />
         </div>
+
+        <h2 class="section-title">Super Mario Clone</h2>
         <div class="game-wrapper">
           <iframe
             class="game-frame"
@@ -37,6 +39,24 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
             rel="noopener">Open it in a new tab</a
           >.
         </p>
+
+        <hr />
+
+        <h2 class="section-title">More projects</h2>
+        <div class="projects-grid">
+          <a href="https://mariovyord.github.io/tiny-terminal-css/index.html" target="_blank" rel="noopener" class="project-card">
+            <h3>Tiny Terminal CSS</h3>
+            <p>A lightweight, retro-inspired CSS framework that brings classic terminal and "movie hacker" vibes to web projects.</p>
+          </a>
+          <a href="https://mariovyord.github.io/cosmic-invaders/index.html" target="_blank" rel="noopener" class="project-card">
+            <h3>Cosmic Invaders</h3>
+            <p>A Space Invaders inspired game made with vanilla JavaScript and the Canvas API.</p>
+          </a>
+          <a href="https://tic-tac-toe-online-11df9.web.app/signin" target="_blank" rel="noopener" class="project-card">
+            <h3>Tic Tac Toe Online</h3>
+            <p>Online game where you can face off against AI or other players.</p>
+          </a>
+        </div>
       </section>
     </main>
     <Footer />
@@ -47,6 +67,10 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
       }
       .title h1 {
         margin: 0 0 0.5em 0;
+      }
+      .section-title {
+        font-size: 1.3rem;
+        margin: 1.5em 0 1em;
       }
       .game-wrapper {
         width: 100%;
@@ -67,6 +91,40 @@ const description = "Play a Super Mario clone built by Mario Yordanov.";
         text-align: center;
         font-size: 0.9rem;
         color: rgb(var(--gray));
+      }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+        margin: 1.5em 0;
+      }
+      .project-card {
+        display: block;
+        padding: 1.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        text-decoration: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      }
+      .project-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 8px 24px rgba(var(--gray), 20%);
+        transform: translateY(-2px);
+      }
+      .project-card h3 {
+        margin: 0 0 0.5em;
+        font-size: 1.15rem;
+        color: var(--text-primary);
+      }
+      .project-card p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: rgb(var(--gray));
+      }
+      @media (max-width: 720px) {
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </body>
