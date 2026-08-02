@@ -22,6 +22,33 @@ A hypothetical AI that can do *any* intellectual task a human can — the way a 
 
 Every model you can use today is **narrow AI** — great at some things, useless at others. AGI is the sci-fi-ish goalpost. No one has built it yet.
 
+### ML Model (Machine Learning Model)
+
+A mathematical function that learned patterns from data instead of being explicitly programmed. It's the "learned brain" — a set of numbers (weights), the strengths of its internal connections, which together encode what it learned.
+
+- **Training:** you feed it examples (e.g., millions of labeled images) and it adjusts its weights so its predictions match reality.
+- **After training:** it takes new, unseen input and produces an output — a prediction, a classification, generated text.
+
+An LLM is one specific kind of ML model (trained on text to predict the next token). Every AI you use runs on some ML model.
+
+### Neurons
+
+The tiny computational units that make up a neural network. Each neuron takes a few numbers in, combines them, and passes a single number out.
+
+Nothing like brain cells in practice — they're just simple math operations that do one thing: decide how strongly to react to their inputs. The intelligence comes from the *pattern* of millions of neurons working together, not from any single one.
+
+### Neuron Layers
+
+Neurons are organized into stacked groups called layers. Data flows through them one layer at a time: in the first layer, then a bunch of hidden layers in the middle, then a final output layer.
+
+Each layer transforms the data a little — extracting slightly more abstract patterns as it goes (in an image model: edges → shapes → objects → "it's a cat"). "Deep learning" just means the network has many layers.
+
+### Weights
+
+The strength of the connection between two neurons. Each connection has a number saying how much of one neuron's output gets passed on to the next — high weight means it strongly influences the result, low means it barely does.
+
+During training, the model keeps nudging these numbers until the output matches the expected answer; after training they're frozen. The learned knowledge *is* the weights — there's no separate storage. Tokens only exist at the input and output edges, so weights connect neurons, not tokens. The relationships between words (cat ≈ feline) emerge from the overall pattern of millions of weights.
+
 ### LLM (Large Language Model)
 
 A type of AI trained on enormous amounts of text to predict the next word in a sentence. Give it a prompt, and it generates a response one word (token) at a time.
