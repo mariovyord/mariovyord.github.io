@@ -1,0 +1,36 @@
+---
+interface Props {
+  rating: number;
+}
+
+const { rating } = Astro.props;
+const stars = Array.from({ length: 5 }, (_, i) => i < rating);
+---
+
+<span class="stars" role="img" aria-label={`${rating} out of 5 stars`}>
+  {
+    stars.map((filled) => (
+      <span
+        aria-hidden="true"
+        class:list={["star", { filled }]}
+      >
+        {filled ? "★" : "☆"}
+      </span>
+    ))
+  }
+</span>
+
+<style>
+  .stars {
+    display: inline-flex;
+    gap: 0.1em;
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+  .star {
+    color: rgb(var(--gray));
+  }
+  .star.filled {
+    color: var(--accent);
+  }
+</style>

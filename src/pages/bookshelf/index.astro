@@ -1,0 +1,119 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import BookCard from "../../components/BookCard.astro";
+import { getCollection } from "astro:content";
+
+const books = await getCollection("books");
+
+const groupLabels = {
+  reading: { title: "Currently reading", blurb: "Books on the nightstand right now." },
+  "want-to-read": { title: "Want to read", blurb: "The to-read pile that keeps growing." },
+  read: { title: "Finished", blurb: "Read, rated, and occasionally reviewed." },
+} as const;
+
+const groups = (["reading", "want-to-read", "read"] as const)
+  .map((status) => {
+    const list = books
+      .filter((b) => b.data.status === status)
+      .sort((a, b) => {
+        const aKey = a.data.finishedDate?.valueOf() ?? a.data.addedDate.valueOf();
+        const bKey = b.data.finishedDate?.valueOf() ?? b.data.addedDate.valueOf();
+        return bKey - aKey;
+      });
+    return { status, ...groupLabels[status], books: list };
+  })
+  .filter((group) => group.books.length > 0);
+
+const title = "Bookshelf — Mario Yordanov";
+const description =
+  "Books I'm reading, want to read, and have finished — with the occasional review.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <div class="title">
+          <h1>Bookshelf</h1>
+          <p><i>Books I'm reading, want to read, and have finished</i></p>
+          <hr />
+        </div>
+        {
+          groups.map((group) => (
+            <section class="group">
+              <header class="group-header">
+                <h2>{group.title}</h2>
+                <p class="count">{group.books.length}</p>
+              </header>
+              <p class="blurb">{group.blurb}</p>
+              <ul class="book-list">
+                {
+                  group.books.map((book) => (
+                    <li>
+                      <BookCard
+                        slug={book.slug}
+                        title={book.data.title}
+                        author={book.data.author}
+                        description={book.data.description}
+                        status={book.data.status}
+                        rating={book.data.rating}
+                        finishedDate={book.data.finishedDate}
+                        cover={book.data.cover}
+                      />
+                    </li>
+                  ))
+                }
+              </ul>
+            </section>
+          ))
+        }
+      </section>
+    </main>
+    <Footer />
+    <style>
+      .title {
+        padding: 1em 0;
+      }
+      .title h1 {
+        margin: 0 0 0.3em 0;
+      }
+      .group {
+        margin-top: 2.5rem;
+      }
+      .group-header {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+      }
+      .group-header h2 {
+        margin: 0;
+      }
+      .count {
+        margin: 0;
+        color: rgb(var(--gray));
+        font-family: "Roboto", sans-serif;
+        font-size: 0.85rem;
+      }
+      .blurb {
+        margin: 0.25rem 0 1rem 0;
+        color: rgb(var(--gray));
+        font-size: 0.9rem;
+      }
+      .book-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </body>
+</html>
