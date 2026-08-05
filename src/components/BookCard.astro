@@ -1,0 +1,155 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+import BookStatus from "./BookStatus.astro";
+import StarRating from "./StarRating.astro";
+
+interface Props {
+  slug: string;
+  title: string;
+  author: string;
+  description: string;
+  status: "reading" | "want-to-read" | "read";
+  rating?: number;
+  finishedDate?: Date;
+  cover?: string;
+}
+
+const { slug, title, author, description, status, rating, finishedDate, cover } =
+  Astro.props;
+---
+
+<a href={`/bookshelf/${slug}/`} class="card" data-tilt>
+  <div class="cover" aria-hidden="true">
+    {cover ? (
+      <img src={cover} alt="" loading="lazy" />
+    ) : (
+      <span class="initial">{title[0]}</span>
+    )}
+  </div>
+  <div class="body">
+    <div class="meta">
+      <BookStatus status={status} />
+      {rating && <StarRating rating={rating} />}
+    </div>
+    <h2 class="title">{title}</h2>
+    <p class="author">by {author}</p>
+    <p class="description">{description}</p>
+    {finishedDate && (
+      <p class="finished">
+        Finished <FormattedDate date={finishedDate} />
+      </p>
+    )}
+  </div>
+</a>
+<style>
+  .card {
+    display: flex;
+    gap: 1.25rem;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    background: var(--bg-primary);
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(var(--gray), 22%);
+  }
+  .cover {
+    flex-shrink: 0;
+    width: 84px;
+    height: 126px;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+  .initial {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #fff;
+    user-select: none;
+  }
+  .body {
+    min-width: 0;
+  }
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .title {
+    margin: 0.4rem 0 0 0;
+    line-height: 1.15;
+    font-size: 1.35rem;
+  }
+  .card:hover .title {
+    color: var(--accent);
+  }
+  .author {
+    margin: 0.15rem 0 0 0;
+    color: var(--text-primary);
+    font-family: "Roboto", sans-serif;
+    font-size: 0.9rem;
+  }
+  .description {
+    color: rgb(var(--gray));
+    margin: 0.5rem 0 0 0;
+    font-size: 0.95rem;
+  }
+  .finished {
+    margin: 0.5rem 0 0 0;
+    color: rgb(var(--gray));
+    font-size: 0.8rem;
+  }
+  @media (max-width: 480px) {
+    .cover {
+      width: 64px;
+      height: 96px;
+    }
+    .card {
+      gap: 1rem;
+      padding: 1rem;
+    }
+  }
+</style>
+
+<script>
+  function initTilt() {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fine = window.matchMedia("(pointer: fine)").matches;
+    if (reduce || !fine) return;
+
+    const MAX = 6; // degrees
+    document.querySelectorAll<HTMLElement>("[data-tilt]").forEach((card) => {
+      if (card.dataset.tiltBound) return;
+      card.dataset.tiltBound = "true";
+
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(700px) rotateY(${px * MAX}deg) rotateX(${-py * MAX}deg) translateY(-2px)`;
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.transform = "";
+      });
+    });
+  }
+
+  initTilt();
+  document.addEventListener("astro:page-load", initTilt);
+</script>

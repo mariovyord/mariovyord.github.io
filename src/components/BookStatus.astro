@@ -1,0 +1,36 @@
+---
+interface Props {
+  status: "reading" | "want-to-read" | "read";
+}
+
+const { status } = Astro.props;
+
+const meta = {
+  reading: { label: "Reading", icon: "📖", hint: "Currently reading" },
+  "want-to-read": { label: "Want to read", icon: "🔖", hint: "On the to-read pile" },
+  read: { label: "Finished", icon: "✅", hint: "Read and finished" },
+} as const;
+
+const { label, icon, hint } = meta[status];
+---
+
+<span class:list={["status", status]} title={hint}>
+  <span aria-hidden="true">{icon}</span>{label}
+</span>
+
+<style>
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 0.35em 0.6em;
+    border-radius: 999px;
+    color: rgb(var(--gray));
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    white-space: nowrap;
+  }
+</style>

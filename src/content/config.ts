@@ -17,4 +17,20 @@ const notes = defineCollection({
   }),
 });
 
-export const collections = { notes };
+const books = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    description: z.string(),
+    cover: z.string().optional(),
+    addedDate: z.coerce.date(),
+    finishedDate: z.coerce.date().optional(),
+    rating: z.number().int().min(1).max(5).optional(),
+    tags: z.array(z.string()).default([]),
+    status: z.enum(["reading", "want-to-read", "read"]),
+    link: z.string().url().optional(),
+  }),
+});
+
+export const collections = { notes, books };
