@@ -65,9 +65,9 @@ const posts = (await getCollection("notes")).sort(
       </section>
       <hr />
       <ul class="now-list">
-        <li>Now Playing: <a href="https://youtu.be/BI9fgQY0d5I?si=PZkv0tGSW7dsr1tu" target="_blank">Rainbow Six Siege</a></li>
-        <li>Now Listening: <a href="https://youtu.be/dr6IkPSrvbw?si=NgpaBAoJA-ehxfnL" target="_blank">Daliborovo Granje - Hainin</a></li>
-        <li>Now Reading: <a href="https://en.wikipedia.org/wiki/Children_of_Ruin" target="_blank">Children of Ruin by Adrian Tchaikovsky</a></li>
+        <li data-magnetic><span class="now-dot" aria-hidden="true"></span><span class="now-label">Now Playing:</span> <a href="https://youtu.be/BI9fgQY0d5I?si=PZkv0tGSW7dsr1tu" target="_blank">Rainbow Six Siege</a></li>
+        <li data-magnetic><span class="now-dot" aria-hidden="true"></span><span class="now-label">Now Listening:</span> <a href="https://youtu.be/dr6IkPSrvbw?si=NgpaBAoJA-ehxfnL" target="_blank">Daliborovo Granje - Hainin</a></li>
+        <li data-magnetic><span class="now-dot" aria-hidden="true"></span><span class="now-label">Now Reading:</span> <a href="https://en.wikipedia.org/wiki/Children_of_Ruin" target="_blank">Children of Ruin by Adrian Tchaikovsky</a></li>
       </ul>
       <section class="recent">
         <header class="recent-header">
@@ -157,8 +157,69 @@ const posts = (await getCollection("notes")).sort(
           padding: 0;
         }
         .now-list li {
+          position: relative;
           width: 100%;
           text-decoration: none;
+          display: flex;
+          align-items: baseline;
+          gap: 0.5em;
+          padding: 0.25em 0;
+          color: var(--text-secondary);
+          transition: color 0.3s ease;
+        }
+        .now-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--accent);
+          flex-shrink: 0;
+          animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.4; transform: scale(0.8); }
+        }
+        .now-label {
+          font-family: 'Roboto Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+          font-size: 0.85rem;
+          color: var(--accent);
+          white-space: nowrap;
+        }
+        .now-list li::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--accent);
+          transition: width 0.3s ease;
+        }
+        .now-list li:hover {
+          color: var(--text-primary);
+        }
+        .now-list li:hover::after {
+          width: 100%;
+        }
+        .now-list a {
+          color: var(--text-secondary);
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        .now-list li:hover a {
+          color: var(--accent);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .now-dot {
+            animation: none;
+          }
+          .now-list li::after {
+            transition: none;
+          }
+          .now-list li,
+          .now-list a {
+            transition: none;
+          }
         }
         .recent {
           margin-top: 3rem;
