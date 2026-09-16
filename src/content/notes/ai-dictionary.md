@@ -1,7 +1,7 @@
 ---
 title: "AI Dictionary"
 description: "Plain-language definitions for common AI terms — a living glossary that grows as I learn new ones."
-pubDate: "September 16 2 2026"
+pubDate: "September 16 2026"
 tags: ["ai", "llm", "reference"]
 status: "growing"
 ---
